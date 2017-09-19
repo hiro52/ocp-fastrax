@@ -177,13 +177,75 @@ Overviewページで以下を確認します。
 
 ![project-Deploy1](./3-3-12.jpg)
 
-次に
+### 2-3.Podの確認
+次にPodの確認を行ってみましょう。
+「Applications」→「Pods」をクリックします。
+
 ![project-Deploy1](./3-4-1.jpg)
 
 
+プロジェクト内で有効なPodが表示されることを確認します。「Completed」、「Running」などのステータスが確認できます。Podの一つをクリックします。
+
+![project-Deploy1](./3-4-2.jpg)
+
+「Details」タブで以下が確認できます。
+・Podの状態
+・ホストするOpenShiftノード
+・イメージ
+・ビルド（#含む）
+・CPU、メモリの利用範囲
+・永続ストレージの追加
+　など。
+確認が終わったら、「Metrics」タブをクリックします。
+
+![project-Deploy1](./3-4-3.jpg)
+
+メトリックスタブにはPodで使用されるリソースが表示されます。
+・利用可能な最大メモリと、実使用量
+・利用可能な最大CPUと実使用量
+・ネットワーク使用量も表示されます
+
+一通り確認したら、「Logs」タブをクリックします。
+
+![project-Deploy1](./3-4-4.jpg)
+
+View Archive をクリックすると、Kibanaログシステムに接続できます。ここでは、過去から現在まで、全てのPodのログを表示できます。
+「Terminal」タブをクリックします。
+
+![project-Deploy1](./3-4-5.jpg)
+
+ターミナルでは、Podの中のいずれかのコンテナ内のターミナルを利用できます。
+
+「Event」をクリックします。
+
+![project-Deploy1](./3-4-6.jpg)
+
+「Event」タブでは、Podに関するイベントが表示されます。
+
+![project-Deploy1](./3-4-7.jpg)
+
+### 2-4.ルートの確認
+次にルートの確認を行ってみましょう。
+「Applications」→「Services」をクリック。
+プロジェクトに関連する全サービスが表示されます。
+・クラスタIP
+　サービスに接続するためのIPアドレス
+・ポート
+　サービスが待機しているポート番号
+
+![project-Deploy1](./3-5-1.jpg)
+「Applications」→「Routes」をクリックし、ルートが表示されることを確認します。
+![project-Deploy1](./3-5-2.jpg)
+
+![project-Deploy1](./3-5-1.jpg)
+![project-Deploy1](./3-5-1.jpg)
+![project-Deploy1](./3-5-1.jpg)
+![project-Deploy1](./3-5-1.jpg)
+![project-Deploy1](./3-5-1.jpg)
+![project-Deploy1](./3-5-1.jpg)
+![project-Deploy1](./3-5-1.jpg)
 
 
-  
 7. リソースリミットの設定  
 Deployments画面の右上の「Actions」プルダウンメニューから「Set Resource Limits」を選択。
 222
