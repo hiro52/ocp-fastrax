@@ -21,3 +21,4 @@ OpenShiftは、”プロジェクト”というくくりで権限、アプリ�
 
 7. リソースリミットの設定  
 Deployments画面の右上の「Actions」プルダウンメニューから「Set Resource Limits」を選択。
+22
