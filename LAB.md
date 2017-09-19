@@ -6,6 +6,5 @@ OpenShiftは、”プロジェクト”というくくりで権限、アプリ�
 OpenShift のWebコンソールにログインします。
 　※Webコンソールのアドレスについては別途ご確認ください。
 
-
-https://github.com/coral-reaf/ocp-fastrax/blob/master/2-1-1.jpg
+![project-new](./2-1-1.jpg)
 
