@@ -5,6 +5,7 @@ OpenShift のWebコンソールにログインします。
 
 OpenShiftは、”プロジェクト”というくくりで権限、アプリケーション等を管理しています。   
 アプリケーションを作成するにはまずプロジェクトを作成します。
+"New Project" をクリックします。
 
 ![project-new](./2-1-1.jpg)
 
@@ -18,6 +19,8 @@ OpenShiftは、”プロジェクト”というくくりで権限、アプリ�
 
 ![project-Deploy1](./2-2-1.jpg)
 
+
+![project-Deploy1](./2-2-2.jpg)
 
 7. リソースリミットの設定  
 Deployments画面の右上の「Actions」プルダウンメニューから「Set Resource Limits」を選択。
