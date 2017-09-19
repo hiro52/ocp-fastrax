@@ -15,9 +15,8 @@
 ![project-name](./2-1-2.jpg)
 
 ## 1-2.コンテナのデプロイメント
-プロジェクト内にアプリケーションを作成してみます。  
-　「Deploy Image」をクリック。「Image Name」 欄に、
-　”sonatype/nexus3”を入力の上、右端の🔍アイコンをクリックします。
+プロジェクト内にアプリケーションを作成してみます。  
+「Deploy Image」をクリック。「Image Name」 欄に、”sonatype/nexus3”を入力の上、右端の🔍アイコンをクリックします。
 　※Sonatype が提供するDockerレポジトリからのコンテナ取得を行います。
 
 　下方に画面をスクロールし、「Create」をクリックします。
