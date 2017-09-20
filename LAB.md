@@ -510,7 +510,105 @@ pipline-yourname-devに入ります。
 ビルドやデプロイメント管理のため、**Jenkins** をデプロイします。
 デプロイが成功することを確認します。
 
-  
-    
+    $ oc new-app jenkins-persistent -p ENABLE_OAUTH=false -p MEMORY_LIMIT=1.5Gi -n pipeline-${GUID}-dev
+    （コマンド実行後の表示内容は以下の通りです）
+    --> Deploying template "openshift/jenkins-persistent" to project pipeline-${GUID}-dev
+     Jenkins (Persistent)
+     （途中略）
+     --> Success
+    Run 'oc status' to view your app.
 
+GUI で**Jenkins**にログインしてみます。
+ admin / password です。
+ルートはOpenShiftのGUIで確認しましょう。
+![project-Deploy1](./8-1-7.jpg)
+
+Jenkins サービスアカウントに、test, prodプロジェクトに対するリソース管理権限を与えます。
+
+    $ oc policy add-role-to-user edit system:serviceaccount:pipeline-${GUID}-dev:jenkins -n pipeline-${GUID}-test
+    $ oc policy add-role-to-user edit system:serviceaccount:pipeline-${GUID}-dev:jenkins -n pipeline-${GUID}-prod
+
+devから、test、prodへのイメージの引用を許可します。
+
+    $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-${GUID}-test -n pipeline-${GUID}-dev
+    $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-${GUID}-prod -n pipeline-${GUID}-dev
+
+devプロジェクトにモックアプリケーションを作成します。
+
+    $ oc new-app https://github.com/StefanoPicozzi/cotd.git -n pipeline-${GUID}-dev
+    （作成完了の確認は以下）
+    $ oc logs -f build/cotd-1 -n pipeline-${GUID}-dev 
+
+イメージにtestready とprodreadyのTAGを付けます
+
+    $ oc tag cotd:latest cotd:testready -n pipeline-${GUID}-dev
+    $ oc tag cotd:testready cotd:prodready -n pipeline-${GUID}-dev
+
+イメージストリームの内容及び、testreadyと、prodreadyのTAGが追加されていることを確認します。
+
+    $　oc describe is cotd -n pipeline-${GUID}-dev
+    
+    oc describe is cotd -n pipeline-${GUID}-dev
+    
+    Name:			cotd
+    Created:		About an hour ago
+    Labels:			app=cotd
+    Annotations:		openshift.io/generated-by=OpenShiftNewApp
+    Docker Pull Spec:	172.30.99.85:5000/pipeline-mydemo-dev/cotd
+    
+    Tag		Spec				Created			PullSpec							Image
+    latest		<pushed>			About an hour ago	172.30.99.85:5000/pipeline-mydemo-dev/cotd@sha256:21c16f04309942...	<same>
+    prodready	cotd@sha256:21c16f04309942...	About an hour ago	172.30.99.85:5000/pipeline-mydemo-dev/cotd@sha256:21c16f04309942...	<same>
+    testready	cotd@sha256:21c16f04309942...	About an hour ago	172.30.99.85:5000/pipeline-mydemo-dev/cotd@sha256:21c16f04309942...	<same>
+
+test, prodプロジェクトにそれぞれ、testreadyのTAG、ProdreadyのTAGがついたイメージからアプリケーションをデプロイします。
+
+    $ oc new-app pipeline-${GUID}-dev/cotd:testready --name=cotd -n pipeline-${GUID}-test
+    $ oc new-app pipeline-${GUID}-dev/cotd:prodready --name=cotd -n pipeline-${GUID}-prod
+
+自動デプロイメントを無効化します。
+
+    $ oc get dc cotd -o yaml -n pipeline-${GUID}-dev | sed 's/automatic: true/automatic: false/g' | oc replace -f -
+    $ oc get dc cotd -o yaml -n pipeline-${GUID}-test| sed 's/automatic: true/automatic: false/g' | oc replace -f -
+    $ oc get dc cotd -o yaml -n pipeline-${GUID}-prod | sed 's/automatic: true/automatic: false/g' | oc replace -f -
+
+OpenShift WebUIにログインし、devプロジェクトを表示、「Add to Project」で、import YAML / JSONを表示します。
+
+以下のテキストをコピーペーストします。Createをクリックし、ビルドコンフィグパイプラインを作成します。
+
+    apiVersion: v1
+    items:
+    - kind: "BuildConfig"
+     apiVersion: "v1"
+     metadata:
+      name: "pipeline-demo"
+     spec:
+      triggers:
+          - github:
+              secret: 5Mlic4Le
+            type: GitHub
+          - generic:
+              secret: FiArdDBH
+            type: Generic
+    strategy:
+      type: "JenkinsPipeline"
+      jenkinsPipelineStrategy:
+        jenkinsfile: |
+                          node {
+                              stage ("Build") {
+                                    echo '*** Build Starting ***'
+                                    openshiftBuild bldCfg: 'cotd', buildName: '', checkForTriggeredDeployments: 'false', commitID: '', namespace: '', showBuildLogs: 'true', verbose: 'true'
+                                    openshiftVerifyBuild bldCfg: 'cotd', checkForTriggeredDeployments: 'false', namespace: '', verbose: 'false'
+                                    echo '*** Build Complete ***'
+                              }
+                              stage ("Deploy and Verify in Development Env") {
+                                    echo '*** Deployment Starting ***'
+                                    openshiftDeploy depCfg: 'cotd', namespace: '', verbose: 'false', waitTime: ''
+                                    openshiftVerifyDeployment authToken: '', depCfg: 'cotd', namespace: '', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
+                                    echo '*** Deployment Complete ***'
+                               }
+                          }
+
+    kind: List
+    metadata: {}
 
