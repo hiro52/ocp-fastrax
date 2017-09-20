@@ -355,9 +355,94 @@ Podで使用されているMemory、CPU、Networkのリソース利用量が表�
 
 ## 5.環境変数の設定と確認
 アプリケーション作成の際に環境変数を設定し、コンテナに設定が反映されることを確認してみましょう。
+　新しくアプリケーションをデプロイし、そのアプリケーションが使用しているCPUやメモリリソースについて確認してみましょう。
+
+### 5-1.環境変数の設定と動作の確認
+　まずはプロジェクトを作成します。
+
+![project-Deploy1](./6-1-1.jpg)
+### ***「New Project」をクリックします。***
+
+![project-Deploy1](./6-1-2.jpg)
+### ***名前を入力し、「Create」をクリックします。***
+
+※名前はご自由に入力ください。但し、OpenShif内で一意である必要があります。
+
+![project-Deploy1](./6-1-3.jpg)
+### ***テンプレートの選択画面で、"Node"と入力し、Node.js + MongoDB (Ephemeral)を選択します。***
+
+![project-Deploy1](./6-1-4.jpg)
+
+(確認のみ)このテンプレートをデプロイするために利用されるイメージが表示されています。
+
+![project-Deploy1](./6-1-5.jpg)
+### ***下にスクロールし、環境変数として「Administrator Password」欄に適当なパスワードを入力してみましょう。入力がすんだら、「Create」をクリックします。***
+
+![project-Deploy1](./6-1-6.jpg)
+### ***「Applications」→「Pods」をクリックします。***
+
+![project-Deploy1](./6-1-7.jpg)
+### ***nodejs-mongodb-example-xxxをクリックします。***
+
+![project-Deploy1](./6-1-8.jpg)
+### ***Terminalタブを開き、echo $MONGODB_ADMIN_PASSWORDを入力し、デプロイ時に設定したパスワードが表示されることを確認します。
+さらに、以下のコマンドで、OpenShiftが自動生成したパスワードも確認します。  
+### ***echo $MONGODB_PASSWORD***
+
+![project-Deploy1](./6-1-9.jpg)
+以下のコマンドを入力してみます。
+### ***ls***  
+### ***ps -ef***
+　コンテナ内のプロセス確認
+### ***env |grep -i mongo***
+　環境変数の確認
+### ***cat /etc/resolv.conf***
+　DNS設定の確認
+
+![project-Deploy1](./6-1-10.jpg)
+
+確認が終了したら、ホームページに戻りプロジェクトを削除します。  
+
+
+## 6.環境変数によるアプリケーションの動作と再デプロイ
+異なるアプリケーションの動作を環境変数によって実現してみましょう。また、構成変更した後にアプリケーションの再デプロイを行い、その動きについて確認してみます。
+
+### 6-1.環境変数の設定と動作の確認
+　まずはプロジェクトを作成します。
+
+![project-Deploy1](./7-1-1.jpg)
+### ***「New Project」をクリックします。***
+
+![project-Deploy1](./7-1-2.jpg)
+### ***名前を入力し、「Create」をクリックします。***
+
+![project-Deploy1](./7-1-3.jpg)
+### ***カタログ選択画面で、"php"を入力し、PHPを選択します。***
+
+
+![project-Deploy1](./7-1-4.jpg)
+### Name欄に、"cotd"、GitURLに、https://github.com/StefanoPicozzi/cotd を入力。さらに、「advanced options」をクリックし、下の方へスクロールします。***
+
+![project-Deploy1](./7-1-5.jpg)
+### ***Deployment Configurationsセクションで、環境変数として、"SELECTOR cities" を入力します***
+
+![project-Deploy1](./7-1-6.jpg)
+### さらに、Labelsセクションで "ab cotd" を設定します。入力が終了したら、「Create」をクリックします。***
+
+![project-Deploy1](./7-1-7.jpg)
+（確認のみ）アプリケーションの環境変数が期待通りに設定されていることを確認します。この環境変数により、Webアプリケーションで表示される写真が変わります。今回設定したのは、「街」の写真です。
+
+
+![project-Deploy1](./7-1-8.jpg)
 
 
 
-7. リソースリミットの設定  
-Deployments画面の右上の「Actions」プルダウンメニューから「Set Resource Limits」を選択。
-222
+![project-Deploy1](./7-1-2.jpg)
+
+
+
+![project-Deploy1](./7-1-2.jpg)
+
+
+
+
