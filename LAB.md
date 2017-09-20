@@ -434,14 +434,71 @@ Podで使用されているMemory、CPU、Networkのリソース利用量が表�
 
 
 ![project-Deploy1](./7-1-8.jpg)
+### ***「Overview」で、アプリケーションのルートをクリックします。***  
+アプリケーションがデプロイされていること設定した環境変数により、「街」の写真が表示されることを確認します。
+### ***さらに、Podアイコン右側の上矢印を2度クリックし、3Podにスケールアップします。***
+
+### 6-2.アプリケーションの再デプロイ
+作成したアプリケーションを再デプロイしてみます。
+
+![project-Deploy1](./7-2-1.jpg)
+### ***「Applications」→「Deployments」をクリックします。***
+
+
+![project-Deploy1](./7-2-2-1.jpg)
+![project-Deploy1](./7-2-2-2.jpg)
+
+### ***「Deploy」をクリックしすぐに「Overview」をクリックします。***
+新しいPodが必要なレプリカ数（今回の場合3個）になるまで増え、逆に、旧Pod新Podが作成される度に1つずつ削除されることを確認します。
+この様に、Podはローリングアップデートされます。
+
+
+![project-Deploy1](./7-2-3.jpg)
+### ***「Overview」から、アプリケーションへのショートカット、「cotd」をクリックします。***
+
+![project-Deploy1](./7-2-4.jpg)
+### ***「Environment」タブで、「deployment configuration」をクリック。環境変数の値を、”cats”に変更し、Saveします。***
+### ***すぐに、「Overview」に戻り、Podが再デプロイされていることを確認します。***
+### ***さらに、アプリケーションへのリンクをクリックし、先ほどの「街」ではなく、「ネコ」が表示されることを確認します。***
+
+![project-Deploy1](./7-2-5.jpg)
+### ***再度アプリケーションへのショートカットをクリックします。***
+
+
+![project-Deploy1](./7-2-6.jpg)
+### ***「Configuration」タブを表示させ、StrategyがRollingであることを確認。その後、「Actions」から、「Edit YAML」をクリックします。
+※オートスケーラーやストレージの追加、リソース制限等もこちらから設定可能であることを確認します。
+
+![project-Deploy1](./7-2-7.jpg)
+### ***上記の例に従って、Strategy の中を編集し、保存します。***
+
+
+![project-Deploy1](./7-2-8.jpg)
+### ***「Deploy」をクリックし、「Overview」を表示します。
+
+![project-Deploy1](./7-2-9.jpg)
+（確認のみ）Recreateに変更したことにより、レプリカのすべてが0にスケールダウンされた後、新しいPodがデプロイされることを確認します。表示上の時間が短く分かりにくい点もありますが、上記のように推移します。
+
+## 7.アプリケーションのライフサイクル管理
+Jenkinsを使ったアプリケーションライフサイクルの管理を行います。まず、プロジェクトを3つ作成しJenkinsのデプロイを行います。  
+このラボは、コマンドラインを多用しますので、SSHで接続できることをまず確認してみます。
+
+![project-Deploy1](./8-1-1.jpg)
+sshで接続します。接続先は、　ocplab-<guid>.oslab.opentlc.com　です。
+
+### ```$ oc login https://master.na1.openshift.opentlc.com```
+
+続いて、OpenShift環境へログインします。
+ご自身のID　Passwordを使って、OpenShiftマスターにログインします。
+
+
+![project-Deploy1](./8-1-3.jpg)
 
 
 
-![project-Deploy1](./7-1-2.jpg)
+![project-Deploy1](./8-1-4.jpg)
 
 
-
-![project-Deploy1](./7-1-2.jpg)
 
 
 
