@@ -481,9 +481,7 @@ Podで使用されているMemory、CPU、Networkのリソース利用量が表�
 
 ## 7.アプリケーションのライフサイクル管理
 Jenkinsを使ったアプリケーションライフサイクルの管理を行います。まず、プロジェクトを3つ作成しJenkinsのデプロイを行います。  
-このラボは、コマンドラインを多用しますので、SSHで接続できることをまず確認してみます。
-
-![project-Deploy1](./8-1-1.jpg)
+このラボは、コマンドラインを多用しますので、SSHで接続できることをまず確認してみます。  
 OPENTLC アカウントを利用し、sshで接続します。  
 
 ##### ***```$ ssh -i ~/.ssh/yourprivatekey.key opentlc-user@ocplab-guid.oslab.opentlc.com```***  
@@ -498,15 +496,21 @@ OPENTLC アカウントを利用し、sshで接続します。  
     $ oc new-project pipeline-${GUID}-prod --description="Cat of the Day Production Environment" --display-name="Cat Of The Day - Prod"
     
     
+作成したprojectを確認します。
 
+    $ oc get projects
+    NAME                   　　DISPLAY NAME         STATUS
+    pipeline-mydemo-dev　　　Cat Of The Day - Dev　　　　Active
+    pipeline-mydemo-prod　　Cat Of The Day - Prod　　　　Active
+    pipeline-mydemo-test　　　Cat Of The Day - Test　　　　Active
 
+pipline-yourname-devに入ります。
 
+    $ oc project pipeline-${GUID}-dev
+ビルドやデプロイメント管理のため、**Jenkins** をデプロイします。
+デプロイが成功することを確認します。
 
-    [vagrant@master ~]# ssh-keygen
-    Generating public/private rsa key pair.
-    Enter file in which to save the key (/home/vagrant/.ssh/id_rsa):  ← リターンを入力
-   
-
-
+  
+    
 
 
