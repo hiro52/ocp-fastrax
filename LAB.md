@@ -486,8 +486,8 @@ Jenkinsを使ったアプリケーションライフサイクルの管理を行�
 ![project-Deploy1](./8-1-1.jpg)
 sshで接続します。接続先は、　ocplab-<guid>.oslab.opentlc.com　です。
 
-*** ```ssh -i ~/.ssh/yourprivatekey.key opentlc-user@ocplab-guid.oslab.opentlc.com```***
-*** ```$ oc login https://master.na1.openshift.opentlc.com```***
+***```ssh -i ~/.ssh/yourprivatekey.key opentlc-user@ocplab-guid.oslab.opentlc.com```***  
+***```$ oc login https://master.na1.openshift.opentlc.com```***
 
 続いて、OpenShift環境へログインします。
 ご自身のID　Passwordを使って、OpenShiftマスターにログインします。
