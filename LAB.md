@@ -590,24 +590,24 @@ OpenShift WebUIにログインし、devプロジェクトを表示、「Add to P
               - generic:
                   secret: FiArdDBH
                 type: Generic
-      strategy:
-        type: "JenkinsPipeline"
-        jenkinsPipelineStrategy:
-          jenkinsfile: |
-                              node {
-                                  stage ("Build") {
-                                        echo '*** Build Starting ***'
-                                        openshiftBuild bldCfg: 'cotd', buildName: '', checkForTriggeredDeployments: 'false', commitID: '', namespace: '', showBuildLogs: 'true', verbose: 'true'
-                                        openshiftVerifyBuild bldCfg: 'cotd', checkForTriggeredDeployments: 'false', namespace: '', verbose: 'false'
-                                        echo '*** Build Complete ***'
-                                  }
-                                  stage ("Deploy and Verify in Development Env") {
-                                        echo '*** Deployment Starting ***'
-                                        openshiftDeploy depCfg: 'cotd', namespace: '', verbose: 'false', waitTime: ''
-                                        openshiftVerifyDeployment authToken: '', depCfg: 'cotd', namespace: '', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
-                                        echo '*** Deployment Complete ***'
-                                   }
-                              }
+        strategy:
+          type: "JenkinsPipeline"
+          jenkinsPipelineStrategy:
+            jenkinsfile: |
+                                node {
+                                    stage ("Build") {
+                                          echo '*** Build Starting ***'
+                                          openshiftBuild bldCfg: 'cotd', buildName: '', checkForTriggeredDeployments: 'false', commitID: '', namespace: '', showBuildLogs: 'true', verbose: 'true'
+                                          openshiftVerifyBuild bldCfg: 'cotd', checkForTriggeredDeployments: 'false', namespace: '', verbose: 'false'
+                                          echo '*** Build Complete ***'
+                                    }
+                                    stage ("Deploy and Verify in Development Env") {
+                                          echo '*** Deployment Starting ***'
+                                          openshiftDeploy depCfg: 'cotd', namespace: '', verbose: 'false', waitTime: ''
+                                          openshiftVerifyDeployment authToken: '', depCfg: 'cotd', namespace: '', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
+                                          echo '*** Deployment Complete ***'
+                                     }
+                                }
 
     kind: List
     metadata: {}
