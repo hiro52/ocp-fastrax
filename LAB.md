@@ -480,7 +480,7 @@ Podで使用されているMemory、CPU、Networkのリソース利用量が表�
 （確認のみ）Recreateに変更したことにより、レプリカのすべてが0にスケールダウンされた後、新しいPodがデプロイされることを確認します。表示上の時間が短く分かりにくい点もありますが、上記のように推移します。
 
 ## 7.アプリケーションのライフサイクル管理
-Jenkinsを使ったアプリケーションライフサイクルの管理を行います。まず、プロジェクトを3つ作成しJenkinsのデプロイを行います。  
+Jenkinsを使ったアプリケーションライフサイクルの管理を行います。  
 このラボは、コマンドラインを多用しますので、SSHで接続できることをまず確認してみます。  
 OPENTLC アカウントを利用し、sshで接続します。  
 
@@ -488,6 +488,7 @@ OPENTLC アカウントを利用し、sshで接続します。  
 続いて、OpenShift環境へログインです。ご自身のID　Passwordを使って、OpenShiftマスターにログインします。  
 ##### ***```$ oc login https://master.na1.openshift.opentlc.com```***
 
+### 7-1.プロジェクトの作成とJenkinsのデプロイ
 ３つの新しいプロジェクト(dev/test/ prod)を作成します。コマンドを4個実行します。 随時、OpenShiftのGUIでも作成の様子を確認してみましょう。
 
     $ GUID=yourname
@@ -572,9 +573,10 @@ test, prodプロジェクトにそれぞれ、testreadyのTAG、ProdreadyのTAG�
     $ oc get dc cotd -o yaml -n pipeline-${GUID}-test| sed 's/automatic: true/automatic: false/g' | oc replace -f -
     $ oc get dc cotd -o yaml -n pipeline-${GUID}-prod | sed 's/automatic: true/automatic: false/g' | oc replace -f -
 
-OpenShift WebUIにログインし、devプロジェクトを表示、「Add to Project」で、import YAML / JSONを表示します。
+OpenShift WebUIにログインし、**devプロジェクト**を表示、**「Add to Project」**で、**import YAML / JSON**を表示します。
+![project-Deploy1](./8-1-15.jpg)
 
-以下のテキストをコピーペーストします。Createをクリックし、ビルドコンフィグパイプラインを作成します。
+以下のテキストをコピーペーストします。**「Create」**をクリックし、ビルドコンフィグパイプラインを作成します。
 
     apiVersion: v1
     items:
@@ -611,4 +613,148 @@ OpenShift WebUIにログインし、devプロジェクトを表示、「Add to P
 
     kind: List
     metadata: {}
+
+### 7-2.パイプラインのテスト
+**Jenkins**によるパイプラインの管理を行ってみます。
+
+![project-Deploy1](./8-2-1.jpg)
+**「Builds」→「Pipelines」**で、パイプラインが作成されていることを確認します。
+
+![project-Deploy1](./8-2-2.jpg)
+**「Start Pipeline」**をクリックし、パイプラインが作成されるのを待ちます。
+
+![project-Deploy1](./8-2-3.jpg)
+**「Edit Pipeline」**をクリックします。ビルド、デプロイにかかった時間を確認します。
+
+![project-Deploy1](./8-2-4.jpg)
+（確認のみ）以下を確認します。  
+　・パイプラインがビルドとデプロイ＆ベリファイの二つのステージを持っている  
+　・それぞれのステージは定義可能な複数の動作を持っている  
+　・ビルドステージでは、ビルドが実行され、正常に完了させる  
+　・デプロイステージでは、新たなデプロイが実行され、コンテナが正常に作成される  
+　・シリアル実行ポリシーが設定されている  
+
+### 7-3.継続インテグレーションの確認
+（確認のみ）環境は以下の通りです。  
+　・アプリケーションライフサイクルを意図した3つの段階がある（Dev、Test、Prod）  
+　・開発プロジェクトにはJenkinsと開発ステージのコンテナがある  
+　・Testプロジェクトはコンテナのテストと、限られた環境内での他のアプリケーションやデーターソースとの統合テストを行う  
+　・Prodプロジェクトには、プロダクションノード上で動作するコンテナがあり、アプリケーションのライブバージョンが稼働している  
+
+　この環境からパイプラインの編集を行い、継続インテグレーションの確認を行います。
+  
+![project-Deploy1](./8-3-2.jpg)
+パイプラインを編集します。GUID=xxxを自身の値に変更した上で、下記テキストをコピーペーストします。この内容は以下の通りです。  
+　・4つのステージを含む  
+　・定義可能な複数の動作を有する  
+　・シリアル実行ポリシーである  
+　・ビルド  
+　　ビルドを実行し、成功を確認する  
+　・Devでのデプロイと確認  
+　開発プロジェクトで最新のアプリケーションをデプロイし、コンテナとサービスが正しくデプロイされていることを確認、イメージを「testready」としてタグ付けします。  
+　・Testでのデプロイとテスト  
+　「testready」タグの付いたイメージをデプロイし、統合テスト(この場合はcURLコマンド)を実行し、成功すると「prodready」としてタグ付けされる  
+　・プロダクション環境でのプロモーション  
+　承認プロセスを経て、Prodでコンテナサービスを展開します。  
+
+    node {
+       withEnv(['GUID=mydemo']) {
+
+        stage ("Build") {
+          echo '*** Build Starting ***'
+          openshiftBuild bldCfg: 'cotd', buildName: '', checkForTriggeredDeployments: 'false', commitID: '', namespace: '', showBuildLogs: 'false', verbose: 'false', waitTime: ''
+          openshiftVerifyBuild apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', bldCfg: 'cotd', checkForTriggeredDeployments: 'false', namespace: '', verbose: 'false'
+          echo '*** Build Complete ***'
+        }
+
+        stage ("Deploy and Verify in Development Env") {
+          echo '*** Deployment Starting ***'
+          openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: '', verbose: 'false', waitTime: ''
+          openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: '', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
+          echo '*** Deployment Complete ***'
+
+          echo '*** Service Verification Starting ***'
+          openshiftVerifyService apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', namespace: 'pipeline-${GUID}-dev', svcName: 'cotd', verbose: 'false'
+          echo '*** Service Verification Complete ***'
+          openshiftTag(srcStream: 'cotd', srcTag: 'latest', destStream: 'cotd', destTag: 'testready')
+        }
+
+        stage ('Deploy and Test in Testing Env') {
+          echo "*** Deploy testready build in pipeline-${GUID}-test project  ***"
+          openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-${GUID}-test', verbose: 'false', waitTime: ''
+
+          openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-${GUID}-test', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false'
+          sleep 30
+          sh 'curl http://cotd-pipeline-${GUID}-test.apps.na1.openshift.opentlc.com/data/ | grep cats -q'
+        }
+
+        stage ('Promote and Verify in Production Env') {
+          echo '*** Waiting for Input ***'
+          input 'Should we deploy to Production?'
+          openshiftTag(srcStream: 'cotd', srcTag: 'testready', destStream: 'cotd', destTag: 'prodready')
+          echo '*** Deploying to Production ***'
+          openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-${GUID}-prod', verbose: 'false', waitTime: ''
+          openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-${GUID}-prod', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false'
+          sleep 60
+          sh 'curl http://cotd-pipeline-${GUID}-prod.apps.na1.openshift.opentlc.com/data/ | grep cats -q'
+        }
+      }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+![project-Deploy1](./8-2-1.jpg)
+
+
+![project-Deploy1](./8-2-1.jpg)
+
+
+![project-Deploy1](./8-2-1.jpg)
+
 
