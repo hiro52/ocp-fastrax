@@ -102,7 +102,9 @@ Overviewページで以下を確認します。
 「cakephp-xxxx...」をクリックし、「Metrics」をクリック
 ブラウザのセキュリティを解除してください
 
-![project-Deploy1](./3-2-6.jpg)
+![project-Deploy1](./3-2-6-1.jpg) ![project-Deploy1](./3-2-6-2.jpg)
+![project-Deploy1](./3-2-6-3.jpg)
+![project-Deploy1](./3-2-6-4.jpg) ![project-Deploy1](./3-2-6-5.jpg)
 
 ### 2-2.サービスとビルドの確認
 　今作成したアプリケーションに関するサービスとビルドについて詳細を確認してみましょう。
