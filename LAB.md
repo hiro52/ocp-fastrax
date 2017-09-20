@@ -579,21 +579,21 @@ OpenShift WebUIにログインし、devプロジェクトを表示、「Add to P
     apiVersion: v1
     items:
     - kind: "BuildConfig"
-     apiVersion: "v1"
-     metadata:
-      name: "pipeline-demo"
-     spec:
-      triggers:
-          - github:
+      apiVersion: "v1"
+      metadata:
+       name: "pipeline-demo"
+      spec:
+       triggers:
+           - github:
               secret: 5Mlic4Le
-            type: GitHub
-          - generic:
+             type: GitHub
+           - generic:
               secret: FiArdDBH
-            type: Generic
-    strategy:
-      type: "JenkinsPipeline"
-      jenkinsPipelineStrategy:
-        jenkinsfile: |
+             type: Generic
+      strategy:
+        type: "JenkinsPipeline"
+        jenkinsPipelineStrategy:
+          jenkinsfile: |
                           node {
                               stage ("Build") {
                                     echo '*** Build Starting ***'
