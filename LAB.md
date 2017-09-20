@@ -6,8 +6,8 @@
  
  　　![project-new](./2-1-1.jpg)
    
- OpenShift のWebコンソールにログインし、"New Project" をクリックします。  
-　※Webコンソールのアドレスについては別途ご確認ください。
+### ***OpenShift のWebコンソールにログインし、"New Project" をクリックします。***  
+ 　※Webコンソールのアドレスについては別途ご確認ください。
 
 
 　![project-name](./2-1-2.jpg)
