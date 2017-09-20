@@ -6,13 +6,13 @@
  
  　　![project-new](./2-1-1.jpg)
    
-### ***OpenShift のWebコンソールにログインし、"New Project" をクリックします。***  
+***OpenShift のWebコンソールにログインし、"New Project" をクリックします。***  
  　※Webコンソールのアドレスについては別途ご確認ください。
 
 
 　![project-name](./2-1-2.jpg)
 
-***「Name」***欄に、***"nexus-your-name"***を入力し、***「Create」***をクリックします。
+***Name欄に、"nexus-your-name"を入力し、Createをクリックします。***
 
 ※your-name にはご自身のお名前をローマ字で入力ください。今回利用する環境はDemo環境で、利用者共有のシステムとなっています。OpenShiftでは、プロジェクト名は一意でなければなりません。プロジェクト名にご自身の名前を入れるのは、プロジェクト名の重複を避けるためです。
 
