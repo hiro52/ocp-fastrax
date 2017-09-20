@@ -484,20 +484,17 @@ Jenkinsを使ったアプリケーションライフサイクルの管理を行�
 このラボは、コマンドラインを多用しますので、SSHで接続できることをまず確認してみます。
 
 ![project-Deploy1](./8-1-1.jpg)
-sshで接続します。接続先は、　ocplab-<guid>.oslab.opentlc.com　です。
+OPENTLC アカウントを利用し、sshで接続します。  
 
-***```ssh -i ~/.ssh/yourprivatekey.key opentlc-user@ocplab-guid.oslab.opentlc.com```***  
+***```$ ssh -i ~/.ssh/yourprivatekey.key opentlc-user@ocplab-guid.oslab.opentlc.com```*** 
+続いて、OpenShift環境へログインです。ご自身のID　Passwordを使って、OpenShiftマスターにログインします。  
 ***```$ oc login https://master.na1.openshift.opentlc.com```***
 
-続いて、OpenShift環境へログインします。
-ご自身のID　Passwordを使って、OpenShiftマスターにログインします。
-
-
-![project-Deploy1](./8-1-3.jpg)
-
-
-
-![project-Deploy1](./8-1-4.jpg)
+３つの新しいプロジェクト(dev/test/ prod)を作成します。コマンドを4個実行します。 随時、OpenShiftのGUIでも作成の様子を確認してみましょう。
+***```$ GUID=yourname  
+$ oc new-project pipeline-${GUID}-dev --description="Cat of the Day Development Environment" --display-name="Cat Of The Day - Dev"  
+$ oc new-project pipeline-${GUID}-test --description="Cat of the Day Testing Environment" --display-name="Cat Of The Day - Test"  
+$ oc new-project pipeline-${GUID}-prod --description="Cat of the Day Production Environment" --display-name="Cat Of The Day - Prod"```
 
 
 
