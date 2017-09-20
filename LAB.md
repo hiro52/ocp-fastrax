@@ -6,8 +6,8 @@
  
  　　![project-new](./2-1-1.jpg)
    
-***OpenShift のWebコンソールにログインし、"New Project" をクリックします。***  
- 　※Webコンソールのアドレスについては別途ご確認ください。
+***OpenShift のWebコンソールにログインし、"New Project" をクリックします。***  
+※Webコンソールのアドレスについては別途ご確認ください。
 
 
 　![project-name](./2-1-2.jpg)
@@ -726,52 +726,3 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**「Ad
 prod プロジェクトで、cotd が再デプロイされていることを確認します！
 
 ## 以上で終了です、お疲れさまでした！！ 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-
-
-
-![project-Deploy1](./8-2-1.jpg)
-
-
-![project-Deploy1](./8-2-1.jpg)
-
-
-![project-Deploy1](./8-2-1.jpg)
-
-
