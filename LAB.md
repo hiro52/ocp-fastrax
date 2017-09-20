@@ -491,14 +491,20 @@ OPENTLC アカウントを利用し、sshで接続します。  
 ##### ***```$ oc login https://master.na1.openshift.opentlc.com```***
 
 ３つの新しいプロジェクト(dev/test/ prod)を作成します。コマンドを4個実行します。 随時、OpenShiftのGUIでも作成の様子を確認してみましょう。  
-`$ GUID=yourname  
-$ oc new-project pipeline-${GUID}-dev --description="Cat of the Day Development Environment" --display-name="Cat Of The Day - Dev"  
-$ oc new-project pipeline-${GUID}-test --description="Cat of the Day Testing Environment" --display-name="Cat Of The Day - Test"  
-$ oc new-project pipeline-${GUID}-prod --description="Cat of the Day Production Environment" --display-name="Cat Of The Day - Prod"`  
+    $ GUID=yourname
+    $ oc new-project pipeline-${GUID}-dev --description="Cat of the Day Development Environment" --display-name="Cat Of The Day - Dev"
+    $ oc new-project pipeline-${GUID}-test --description="Cat of the Day Testing Environment" --display-name="Cat Of The Day - Test"
+    $ oc new-project pipeline-${GUID}-prod --description="Cat of the Day Production Environment" --display-name="Cat Of The Day - Prod"
+    
+    
 
 
 
 
+    [vagrant@master ~]# ssh-keygen
+    Generating public/private rsa key pair.
+    Enter file in which to save the key (/home/vagrant/.ssh/id_rsa):  ← リターンを入力
+   
 
 
 
