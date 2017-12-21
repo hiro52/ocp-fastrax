@@ -553,6 +553,12 @@ test, prodプロジェクトにそれぞれ、testreadyのTAG、ProdreadyのTAG�
     $ oc new-app pipeline-${GUID}-dev/cotd:testready --name=cotd -n pipeline-${GUID}-test
     $ oc new-app pipeline-${GUID}-dev/cotd:prodready --name=cotd -n pipeline-${GUID}-prod
 
+3つ全てのアプリケーションのルートを作成します。
+
+    $ oc expose service cotd -n pipeline-${GUID}-dev
+    $ oc expose service cotd -n pipeline-${GUID}-test
+    $ oc expose service cotd -n pipeline-${GUID}-prod
+
 自動デプロイメントを無効化します。
 
     $ oc get dc cotd -o yaml -n pipeline-${GUID}-dev | sed 's/automatic: true/automatic: false/g' | oc replace -f -
