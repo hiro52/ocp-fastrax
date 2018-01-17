@@ -228,7 +228,7 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 ・ポート
 　サービスが待機しているポート番号
 
-![project-Deploy1](./3-5-1.jpg)
+![project-Deploy1](./3-5-1-2.jpg)
 「Applications」→「Routes」をクリックし、ルートが表示されることを確認します。
 ![project-Deploy1](./3-5-2.jpg)
 
