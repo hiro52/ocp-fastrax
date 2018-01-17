@@ -385,7 +385,7 @@ Podで使用されているMemory、CPU、Networkのリソース利用量が表�
 ### ***cat /etc/resolv.conf***
 　DNS設定の確認
 
-![project-Deploy1](./6-1-10.jpg)
+![project-Deploy1](./6-1-10-2.jpg)
 
 確認が終了したら、ホームページに戻りプロジェクトを削除します。  
 
