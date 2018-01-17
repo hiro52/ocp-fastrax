@@ -440,7 +440,7 @@ Podで使用されているMemory、CPU、Networkのリソース利用量が表�
 ![project-Deploy1](./7-2-3.jpg)
 ### ***「Overview」から、アプリケーションへのショートカット、「cotd」をクリックします。***
 
-![project-Deploy1](./7-2-4.jpg)
+![project-Deploy1](./7-2-4-2.jpg)
 ### ***「Environment」タブで、「deployment configuration」をクリック。環境変数の値を、”cats”に変更し、Saveします。***
 ### ***すぐに、「Overview」に戻り、Podが再デプロイされていることを確認します。***
 ### ***さらに、アプリケーションへのリンクをクリックし、先ほどの「街」ではなく、「ネコ」が表示されることを確認します。***
