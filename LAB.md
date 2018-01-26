@@ -710,7 +710,6 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**「Ad
 - 異なるステージの確認が可能。
 - 「Pipeline Syntax」をクリックすることにより簡単に新しいパイプラインの作成が可能
 
- ![project-Deploy1](./8-3-6.jpg)   
  OpenShiftのWebコンソールに戻ります。
 **「Input Required」をクリック→Jenkinsの「Proceed」をクリック**し、Prodにアプリケーションをデプロイします！
 prod プロジェクトで、cotd が再デプロイされていることを確認します！
