@@ -35,7 +35,7 @@
 　![project-Deploy1](./2-2-4n.jpg)
   
 
-### ***1-2-4. Create Routeをクリックし、「Nexus3」サービスに対するルートを作成します。Continue to overviewをクリックします。***
+### ***1-2-4. Create Routeをクリックし、「Nexus3」サービスに対するルートを作成します。***
 
  　![project-Deploy1](./2-2-5.jpg)
 ※コンテナをデプロイするだけでは外からの接続が行えません。
