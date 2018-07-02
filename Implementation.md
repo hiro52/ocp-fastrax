@@ -125,7 +125,6 @@ MetricsServiceがStartになっていることを確認の上、master 1/2/3を�
 次に、ビルド情報を見てみます。
 「Builds」→「Builds」を選択。ここにはプロジェクト内のすべてのビルド、及びそのステータス、ソースへのリンク、デプロイがいつ行われたかなどが表示されます。一通り確認が終了したら、「cakephp-xxxx...」をクリック。
 
-![project-Deploy1](./3-3-4-1.jpg)
 ![project-Deploy1](./3-3-4-2.jpg)
 
 右上の「Start Build」をクリックしてみましょう。
