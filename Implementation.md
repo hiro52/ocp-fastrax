@@ -75,9 +75,9 @@ admin/admin123
 
 ![project-Deploy1](./3-1-2.jpg)
 
-### ***2-1-3. 今度はテンプレートからデプロイしてみます。「Browse Catalog」をクリックし、"cakephp" を入力。CakePHP +MySQL　の「Select」をクリックします。***
+### ***2-1-3. 今度はテンプレートからデプロイしてみます。検索画面で、"cakephp" を入力。CakePHP +MySQL　の「Epemeral」を選択します。***
 
-![project-Deploy1](./3-2-1.jpg)
+![project-Deploy1](./3-2-1n.jpg)
 
 サービス名、PHPとMySQLコンテナがそれぞれ利用可能な、最大メモリの値、アプリのソースコードが含まれるGitリポジトリが指定できることを確認します。
 
