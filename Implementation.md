@@ -150,7 +150,7 @@ MetricsServiceがStartになっていることを確認の上、master 1/2/3を�
 
 ![project-Deploy1](./3-3-8-2n.jpg)
 
-cakephp-mysql-exampleの方は、先ほどデプロイしましたので、LastVersionが＃2となっています。また以下を確認します。  
+cakephp-mysql-exampleの方は、先ほどデプロイしましたので、LastVersionが＃2となっています。また以下の情報が取得できることを確認します。  
   
 ・それぞれのPodのレプリカ数  
 ・いつ作成されたか  
@@ -158,13 +158,14 @@ cakephp-mysql-exampleの方は、先ほどデプロイしましたので、LastV
   
 ![project-Deploy1](./3-3-9n.jpg)
 
+一通り確認ができたら、cakephp-mysql-example　行の「#2」をクリックします。右上の「Actions」をクリックし、以下の確認・設定等が行えることを確認します。  
+
 ・デプロイに利用されたテンプレート情報  
+・オートスケール
+・リソースのリミット
 ・ポート情報  
 ・メモリ制限  
 ・永続ボリュームが追加可能  
-などが確認できます。  
-
-また、パフォーマンスがしきい値をオーバーした際のオートスケール設定や、リソース使用量の制限も設定可能です。
 
 ![project-Deploy1](./3-3-10.jpg)
 
