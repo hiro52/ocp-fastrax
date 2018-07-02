@@ -75,7 +75,7 @@ admin/admin123
 
 ![project-Deploy1](./3-1-2.jpg)
 
-### ***2-1-3. 今度はテンプレートからデプロイしてみます。検索画面で、"cakephp" を入力。CakePHP +MySQL　の「Epemeral」を選択します。***
+### ***2-1-3. 今度はテンプレートからデプロイしてみます。検索画面で、"cakephp" を入力。CakePHP +MySQL　の「Ephemeral」を選択します。***
 
 ![project-Deploy1](./3-2-1n.jpg)
 
