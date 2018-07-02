@@ -190,7 +190,7 @@ cakephp-mysql-exampleの方は、先ほどデプロイしましたので、LastV
 
 ![project-Deploy1](./3-4-2.jpg)
 
-「Details」タブで以下が確認できます。
+「Details」タブで以下が確認できます。  
 ・Podの状態  
 ・ホストするOpenShiftノード  
 ・イメージ  
