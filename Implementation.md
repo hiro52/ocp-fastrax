@@ -32,7 +32,7 @@
 ### ***1-2-3. 上下の矢印をクリックし、Podが増減することを確認します。***
 「Project」の「Overview」ページが開きます。「Nexus3」というサービスが作成され、Podが1つデプロイされていることが分かります。  
   
-　![project-Deploy1](./2-2-4.jpg)
+　![project-Deploy1](./2-2-4n.jpg)
   
 
 ### ***1-2-4. Create Routeをクリックし、「Nexus3」サービスに対するルートを作成します。Continue to overviewをクリックします。***
