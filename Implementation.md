@@ -8,6 +8,7 @@
 
    <img src="2-1-1n.jpg" alt="attach:cat" title="attach:cat" width="700">  
    　　   　※Webコンソールのアドレス、ログインIDとパスワードは別途ご確認ください。  
+           
 ### ***1-1-2. Name欄に、"nexus-your-name"を入力し、Createをクリックします。***  
  ※your-name にはご自身のお名前をローマ字で入力ください。今回利用する環境はDemo環境で、利用者共有のシステムとなっています。OpenShiftでは、プロジェクト名は一意でなければなりません。プロジェクト名にご自身の名前を入れるのは、プロジェクト名の重複を避けるためです。
 <img src="2-1-2.jpg" alt="attach:cat" title="attach:cat" width="700">  
