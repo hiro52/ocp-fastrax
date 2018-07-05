@@ -248,16 +248,28 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 
 ![project-Deploy1](./4-1-1-2n.jpg)
 
-クォータの設定はコマンドラインから行います。sshクライアントで、Workstation 環境に接続します。
+クォータの設定はコマンドラインから行います。sshクライアントで、Workstation 環境に接続します。  
 　※接続先等は別途ご確認ください。
 
-
-    $ oc login <OpenShift Master1 IP>
+    $ sudo -i
+    # oc login <OpenShift Master1 IP>
     　login ID:andrew
       Password:r3dh4t1! 
+    # cat << EOF > /root/compute-resources2.yaml
+    apiVersion: v1
+    kind: ResourceQuota
+    metadata:
+      name: compute-resources
+    spec:
+      hard:
+        pods: 4
+        limits.cpu: 1
+        limits.memory: 8Gi
+        services: 3
+    EOF
 
-    $ oc login <OpenShift Master1 IP>
-
+    # oc create -f compute-resources.yaml -n new-apps
+    # oc describe quota
 
 クォータでは、以下が確認できます。  
 ・このプロジェクトと全プロジェクトの利用CPU/メモリ  
