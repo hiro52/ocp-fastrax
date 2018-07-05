@@ -244,6 +244,21 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 
 ![project-Deploy1](./4-1-1.jpg)
 
+まだクォータが設定されていないので、何も表示されません。このプロジェクトに対し、クォータを設定してみます。  
+
+![project-Deploy1](./4-1-1-2n.jpg)
+
+クォータの設定はコマンドラインから行います。sshクライアントで、Workstation 環境に接続します。
+　※接続先等は別途ご確認ください。
+
+
+    $ oc login <OpenShift Master1 IP>
+    　login ID:andrew
+      Password:r3dh4t1! 
+
+    $ oc login <OpenShift Master1 IP>
+
+
 クォータでは、以下が確認できます。  
 ・このプロジェクトと全プロジェクトの利用CPU/メモリ  
 ・このプロジェクトと全プロジェクトに設定されているクォータ  
