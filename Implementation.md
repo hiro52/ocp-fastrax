@@ -270,10 +270,21 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 
     # oc create -f compute-resources.yaml -n new-apps
     # oc describe quota
+    Name:           compute-resources
+    Namespace:      new-apps
+    Resource        Used    Hard
+    --------        ----    ----
+    limits.cpu      0       1
+    limits.memory   1Gi     8Gi
+    pods            2       4
+    services        2       3
 
-クォータでは、以下が確認できます。  
-・このプロジェクトと全プロジェクトの利用CPU/メモリ  
-・このプロジェクトと全プロジェクトに設定されているクォータ  
+再度、OpenShift Master GUIで、「Resources」→「Quota」を確認してみてみると、以下のようなリソース利用状況が確認できます。  
+
+![project-Deploy1](./4-1-1-3n.jpg)
+
+・このプロジェクトの利用CPU/メモリ  
+・このプロジェクトに設定されているクォータ  
 ・Pod、サービスの数など  
 
 ![project-Deploy1](./4-1-2.jpg)
