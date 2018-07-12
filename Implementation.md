@@ -431,17 +431,17 @@ Jenkinsを使ったアプリケーションライフサイクルの管理を行�
 このラボは、コマンドラインを多用しますので、SSHで接続できることをまず確認してみます。  
 OPENTLC アカウントを利用し、sshで接続します。  
 
-##### ***```$ ssh -i ~/.ssh/yourprivatekey.key opentlc-user@ocplab-guid.oslab.opentlc.com```***  
-続いて、OpenShift環境へログインです。ご自身のID　Passwordを使って、OpenShiftマスターにログインします。  
-##### ***```$ oc login https://master.na1.openshift.opentlc.com```***
+##### ***```$ ssh -i ~/.ssh/yourprivatekey.key opentlc-user@bastion.<guid>.example.opentlc.com```***  
+続いて、OpenShift環境へログインです。user名 "karla" でOpenShiftマスターにログインします。  
+パスワードは、r3dh4t1!です。  
+##### ***```$ oc login -u karla https://loadbalancer1.<guid>.example.opentlc.com/```***
 
-### 7-1.プロジェクトの作成とJenkinsのデプロイ
+### 6-1.プロジェクトの作成とJenkinsのデプロイ
 ３つの新しいプロジェクト(dev/test/ prod)を作成します。コマンドを4個実行します。 随時、OpenShiftのGUIでも作成の様子を確認してみましょう。
 
-    $ GUID=yourname
-    $ oc new-project pipeline-${GUID}-dev --description="Cat of the Day Development Environment" --display-name="Cat Of The Day - Dev"
-    $ oc new-project pipeline-${GUID}-test --description="Cat of the Day Testing Environment" --display-name="Cat Of The Day - Test"
-    $ oc new-project pipeline-${GUID}-prod --description="Cat of the Day Production Environment" --display-name="Cat Of The Day - Prod"
+    $ oc new-project pipeline-dev --description="Cat of the Day Development Environment" --display-name="Cat Of The Day - Dev"
+    $ oc new-project pipeline-test --description="Cat of the Day Testing Environment" --display-name="Cat Of The Day - Test"
+    $ oc new-project pipeline-prod --description="Cat of the Day Production Environment" --display-name="Cat Of The Day - Prod"
     
     
 作成したprojectを確認します。
@@ -452,40 +452,40 @@ OPENTLC アカウントを利用し、sshで接続します。  
     pipeline-mydemo-prod　　Cat Of The Day - Prod　　　　Active
     pipeline-mydemo-test　　　Cat Of The Day - Test　　　　Active
 
-pipline-yourname-devに入ります。
+作成した3つのうち、pipline-devに入ります。
 
-    $ oc project pipeline-${GUID}-dev
+    $ oc project pipeline-dev
 ビルドやデプロイメント管理のため、**Jenkins** をデプロイします。
 デプロイが成功することを確認します。
 
-    $ oc new-app jenkins-persistent -p ENABLE_OAUTH=false -p MEMORY_LIMIT=1.5Gi -n pipeline-${GUID}-dev
+    $ oc new-app jenkins-persistent -p ENABLE_OAUTH=false -p MEMORY_LIMIT=1.5Gi -n pipeline-dev
     （コマンド実行後の表示内容は以下の通りです）
-    --> Deploying template "openshift/jenkins-persistent" to project pipeline-${GUID}-dev
+    --> Deploying template "openshift/jenkins-persistent" to project pipeline-dev
      Jenkins (Persistent)
      （途中略）
      --> Success
     Run 'oc status' to view your app.
 
-GUI で**Jenkins**にログインしてみます。
+GUI でPod が立ち上がった（Podの青い丸が表示されている）ことを確認した上で、**Jenkins**にログインしてみます。
  admin / password です。
-ルートはOpenShiftのGUIで確認しましょう。
+接続先は、Podのルートで確認です！
 ![project-Deploy1](./8-1-7.jpg)
 
 Jenkins サービスアカウントに、test, prodプロジェクトに対するリソース管理権限を与えます。
 
-    $ oc policy add-role-to-user edit system:serviceaccount:pipeline-${GUID}-dev:jenkins -n pipeline-${GUID}-test
-    $ oc policy add-role-to-user edit system:serviceaccount:pipeline-${GUID}-dev:jenkins -n pipeline-${GUID}-prod
+    $ oc policy add-role-to-user edit system:serviceaccount:pipeline-dev:jenkins -n pipeline-test
+    $ oc policy add-role-to-user edit system:serviceaccount:pipeline-dev:jenkins -n pipeline-prod
 
 devから、test、prodへのイメージの引用を許可します。
 
-    $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-${GUID}-test -n pipeline-${GUID}-dev
-    $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-${GUID}-prod -n pipeline-${GUID}-dev
+    $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-test -n pipeline-dev
+    $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-prod -n pipeline-dev
 
 devプロジェクトにモックアプリケーションを作成します。
 
-    $ oc new-app https://github.com/StefanoPicozzi/cotd.git -n pipeline-${GUID}-dev
+    $ oc new-app https://github.com/devops-with-openshift/cotd -n pipeline-dev
     （作成完了の確認は以下）
-    $ oc logs -f build/cotd-1 -n pipeline-${GUID}-dev 
+    $ oc logs -f build/cotd-1 -n pipeline-dev 
 
 イメージにtestready とprodreadyのTAGを付けます
 
@@ -567,7 +567,7 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**「Ad
     kind: List
     metadata: {}
 
-### 7-2.パイプラインのテスト
+### 6-2.パイプラインのテスト
 **Jenkins**によるパイプラインの管理を行ってみます。
 
 ![project-Deploy1](./8-2-1.jpg)
@@ -587,7 +587,7 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**「Ad
 　・デプロイステージでは、新たなデプロイが実行され、コンテナが正常に作成される  
 　・シリアル実行ポリシーが設定されている  
 
-### 7-3.継続インテグレーションの確認  
+### 6-3.継続インテグレーションの確認  
 環境は以下の通りです。 
 - アプリケーションライフサイクルを意図した3つの段階がある（Dev、Test、Prod）  
 - 開発プロジェクトにはJenkinsと開発ステージのコンテナがある  
