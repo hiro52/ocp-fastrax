@@ -449,7 +449,7 @@ Podで使用されているMemory、CPU、Networkのリソース利用量が表�
 
 
 ![project-Deploy1](./7-1-4.jpg)
-### Name欄に、"cotd"、GitURLに、https://github.com/StefanoPicozzi/cotd を入力。さらに、「advanced options」をクリックし、下の方へスクロールします。***
+### Name欄に、"cotd"、GitURLに、https://github.com/devops-with-openshift/cotd を入力。さらに、「advanced options」をクリックし、下の方へスクロールします。***
 
 ![project-Deploy1](./7-1-5.jpg)
 ### ***Deployment Configurationsセクションで、環境変数として、"SELECTOR cities" を入力します***
