@@ -342,26 +342,24 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 確認が終了したら、ホームページに戻りプロジェクトを削除します。  
 
 
-## 6.環境変数によるアプリケーションの動作と再デプロイ (04 01)
+## 5.環境変数によるアプリケーションの動作と再デプロイ (04 01)
 異なるアプリケーションの動作を環境変数によって実現してみましょう。また、構成変更した後にアプリケーションの再デプロイを行い、その動きについて確認してみます。
 
-### 6-1.環境変数の設定と動作の確認
-　まずはプロジェクトを作成します。
+### 5-1.環境変数の設定と動作の確認
+　まずはプロジェクトを作成します。  
+  ※名前はご自由に入力ください。但し、OpenShif内で一意である必要があります。
 
-![project-Deploy1](./7-1-1.jpg)
-### ***「New Project」をクリックします。***
+![project-Deploy1](./6-1-1n.jpg)
 
-![project-Deploy1](./7-1-2.jpg)
-### ***名前を入力し、「Create」をクリックします。***
+### ***カタログ検索で、"php"と入力し、PHPを選択します。***
 
-![project-Deploy1](./7-1-3.jpg)
-### ***カタログ選択画面で、"php"を入力し、PHPを選択します。***
+![project-Deploy1](./7-1-3n.jpg)
+
+### ***Add to Projectで、作成したプロジェクト、Versionは7.0を選択します。 Name欄に、"cotd"、GitURLに、https://github.com/devops-with-openshift/cotd を入力。さらに、「advanced options」をクリックし、下の方へスクロールします。***
+
+![project-Deploy1](./7-1-4n.jpg)
 
 
-![project-Deploy1](./7-1-4.jpg)
-### Name欄に、"cotd"、GitURLに、https://github.com/devops-with-openshift/cotd を入力。さらに、「advanced options」をクリックし、下の方へスクロールします。***
-
-![project-Deploy1](./7-1-5.jpg)
 ### ***Deployment Configurationsセクションで、環境変数として、"SELECTOR cities" を入力します***
 
 ![project-Deploy1](./7-1-6.jpg)
@@ -376,7 +374,7 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 アプリケーションがデプロイされていること設定した環境変数により、「街」の写真が表示されることを確認します。
 ### ***さらに、Podアイコン右側の上矢印を2度クリックし、3Podにスケールアップします。***
 
-### 6-2.アプリケーションの再デプロイ
+### 5-2.アプリケーションの再デプロイ
 作成したアプリケーションを再デプロイしてみます。
 
 ![project-Deploy1](./7-2-1.jpg)
