@@ -360,62 +360,73 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 ![project-Deploy1](./7-1-4n.jpg)
 
 
-### ***Deployment Configurationsセクションで、環境変数として、"SELECTOR cities" を入力します***
+### ***Deployment Configurationsセクションで、環境変数として、"SELECTOR cities" を入力します。さらに下にスクロールし、Labelsに "app cotd" が設定されていることを確認し（図なし）、「Create」をクリックします。***
 
-![project-Deploy1](./7-1-6.jpg)
-### さらに、Labelsセクションで "ab cotd" を設定します。入力が終了したら、「Create」をクリックします。***
+![project-Deploy1](./7-1-6n.jpg)
 
-![project-Deploy1](./7-1-7.jpg)
-（確認のみ）アプリケーションの環境変数が期待通りに設定されていることを確認します。この環境変数により、Webアプリケーションで表示される写真が変わります。今回設定したのは、「街」の写真です。
-
-
-![project-Deploy1](./7-1-8.jpg)
 ### ***「Overview」で、アプリケーションのルートをクリックします。***  
-アプリケーションがデプロイされていること設定した環境変数により、「街」の写真が表示されることを確認します。
+アプリケーションがデプロイされていること設定した環境変数により、「街」の写真が表示されることを確認します。  
+
+![project-Deploy1](./7-1-8n.jpg)  
+
+
 ### ***さらに、Podアイコン右側の上矢印を2度クリックし、3Podにスケールアップします。***
+
+![project-Deploy1](./7-1-9n.jpg)  
 
 ### 5-2.アプリケーションの再デプロイ
 作成したアプリケーションを再デプロイしてみます。
 
+### ***「Applications」→「Deployments」をクリックします。***  
 ![project-Deploy1](./7-2-1.jpg)
-### ***「Applications」→「Deployments」をクリックします。***
 
-
-![project-Deploy1](./7-2-2-1.jpg)
-![project-Deploy1](./7-2-2-2.jpg)
+### ***「cotd」をクリックします。*** 
+![project-Deploy1](./7-2-2-0n.jpg)
 
 ### ***「Deploy」をクリックしすぐに「Overview」をクリックします。***
 新しいPodが必要なレプリカ数（今回の場合3個）になるまで増え、逆に、旧Pod新Podが作成される度に1つずつ削除されることを確認します。
-この様に、Podはローリングアップデートされます。
+Podのこの様なアップデート方法を、ローリングアップデートと呼び、アップデートのデフォルト値です。後ほど、別のポリシーに変更してみます。
 
-
+![project-Deploy1](./7-2-2-1.jpg)
+![project-Deploy1](./7-2-2-2.jpg)
+  
 ![project-Deploy1](./7-2-3.jpg)
+
 ### ***「Overview」から、アプリケーションへのショートカット、「cotd」をクリックします。***
 
-![project-Deploy1](./7-2-4-2.jpg)
-### ***「Environment」タブで、「deployment configuration」をクリック。環境変数の値を、”cats”に変更し、Saveします。***
-### ***すぐに、「Overview」に戻り、Podが再デプロイされていることを確認します。***
+![project-Deploy1](./7-2-4-2n.jpg)
+
+### ***「Environment」タブで、環境変数の値を、”cats”に変更し、Saveし、すぐに、「Overview」に戻り、Podが再デプロイされていることを確認します。***  
+![project-Deploy1](./7-2-4-3n.jpg)
+
 ### ***さらに、アプリケーションへのリンクをクリックし、先ほどの「街」ではなく、「ネコ」が表示されることを確認します。***
 
 ![project-Deploy1](./7-2-5.jpg)
-### ***再度アプリケーションへのショートカットをクリックします。***
+### ***再度アプリケーションへのショートカット「cotd」をクリックします。***
 
+![project-Deploy1](./7-2-4-2n.jpg)
+
+### ***「Configuration」タブを表示させ、StrategyがRollingであることを確認。その後、「Actions」から、「Edit YAML」をクリックします。
+※オートスケーラーやストレージの追加、リソース制限等もこちらから設定可能であることもついでに確認しておきましょう！
 
 ![project-Deploy1](./7-2-6.jpg)
-### ***「Configuration」タブを表示させ、StrategyがRollingであることを確認。その後、「Actions」から、「Edit YAML」をクリックします。
-※オートスケーラーやストレージの追加、リソース制限等もこちらから設定可能であることを確認します。
 
-![project-Deploy1](./7-2-7.jpg)
 ### ***上記の例に従って、Strategy の中を編集し、保存します。***
+![project-Deploy1](./7-2-7n.jpg)
+
+### ***StrategyがRecreateに変更されたことを確認します。***
+![project-Deploy1](./7-2-7-2n.jpg)
 
 
-![project-Deploy1](./7-2-8.jpg)
 ### ***「Deploy」をクリックし、「Overview」を表示します。
 
-![project-Deploy1](./7-2-9.jpg)
+![project-Deploy1](./7-2-8.jpg)
+
 （確認のみ）Recreateに変更したことにより、レプリカのすべてが0にスケールダウンされた後、新しいPodがデプロイされることを確認します。表示上の時間が短く分かりにくい点もありますが、上記のように推移します。
 
-## 7.アプリケーションのライフサイクル管理
+![project-Deploy1](./7-2-9.jpg)
+
+## 6.アプリケーションのライフサイクル管理
 Jenkinsを使ったアプリケーションライフサイクルの管理を行います。  
 このラボは、コマンドラインを多用しますので、SSHで接続できることをまず確認してみます。  
 OPENTLC アカウントを利用し、sshで接続します。  
