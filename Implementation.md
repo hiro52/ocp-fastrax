@@ -297,114 +297,28 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 
 終了したら、、ホームページに戻り、プロジェクトを削除します。  
 
-## 4.ログとメトリックスの収集 (03 03)
-アプリケーションをデプロイし、メトリックスの収集と表示、ログ表示について学びます。
 
-### 4-1.テキストログの確認
-新規にプロジェクトを作成します。  
-![project-Deploy1](./5-1-1.jpg)
-
-"eap64" を入力し、「jboss-eap-openshift」を選択します。
-![project-Deploy1](./5-1-2.jpg)
-
-以下を入力して作成します。
-S2Iであることも確認しておきます。
-Name:
- openshift-tasks
-Git Repo:  https://github.com/openshiftdemos/openshift-tasks
-
-![project-Deploy1](./5-1-3.jpg)
-
-Continue to overviewをクリックし、Overview画面を表示させます。
-![project-Deploy1](./5-1-4.jpg)
-
-自動的にルートが作成されていることを確認し、「View Log」をクリックします。
-![project-Deploy1](./5-1-5.jpg)
-
-最終行を追いたい時には、「Follow」、特定の位置で止めたい場合は、「Stop Following」を選択
-![project-Deploy1](./5-1-6.jpg)
-
-ソースコードがダウンロードされ、イメージが作成されていることを確認します。
-後のデプロイメントに利用するためのデータもコピーされていることが分かります。これは、例えば、Jenkins Server上のMavenビルドなど、他の場所で実行された場合でも作成されます。確認終了後、「Overview」を表示します。
-
-![project-Deploy1](./5-1-7.jpg)
-
-### 4-2.メトリックスの確認とKibanaを利用したLogの閲覧
-ロードジェネレーターを利用して、CPUに負荷をかけ、その様子を確認してみましょう。
-![project-Deploy1](./5-2-1.jpg)
-
-値（負荷発生時間）に300を入力し、「Load」をクリックします。
-
-![project-Deploy1](./5-2-2.jpg)
-
-「Overview」をクリックし、CPUに負荷がかかっていることを確認します。
-![project-Deploy1](./5-2-3.jpg)
-
-アプリケーション実行中のPodをクリックします。
-![project-Deploy1](./5-2-4.jpg)
-
-「Metrics」タブをクリックします。
-![project-Deploy1](./5-2-5.jpg)
-
-Podで使用されているMemory、CPU、Networkのリソース利用量が表示されることを確認します。ロードジェネレーターを起動させたので、CPUの負荷が一時的に上がっていることが分かります。
-![project-Deploy1](./5-2-6.jpg)
-
-アプリケーションページに戻り、「Logger」にある各Logを数回クリックし、メッセージを生成します。
-
-![project-Deploy1](./5-2-7.jpg)
-
-
-「Overview」で、Podを3Podsに増やします。
-![project-Deploy1](./5-2-8.jpg)
-
-
-3つのPodのうち、一つをクリックします。
-![project-Deploy1](./5-2-9.jpg)
-
-「Logs」タブをクリックします。Kibanaを使ってLog内容が表示されています。Kibanaでは、実行中・停止中にかかわらず全てのPodのLog情報が閲覧可能です。「View Archive」をクリックします。
-
-![project-Deploy1](./5-2-10.jpg)
-
-上部フィールドには、特定のPodを示すフィルターが入力されていることを確認します。また、下部には、メッセージが表示されていることを確認します。
-
-※環境依存でうまく動かないケースもある様です。うまくいかない場合は、6.に進んでください。
-
-
-![project-Deploy1](./5-2-11.jpg)
-
-フィルターの最初の部分を削除して、プロジェクト内すべてのPodを表示します。
-
-![project-Deploy1](./5-2-12.jpg)
-
-さらに、*error*を最後に追加して、全エラーメッセージが表示される様にします。
-
-![project-Deploy1](./5-2-13.jpg)
-
-確認が終了したら、、ホームページに戻り、プロジェクトを削除します
-
-
-## 5.環境変数の設定と確認 (03 04)
+## 4.環境変数の設定と確認 (03 04)
 アプリケーション作成の際に環境変数を設定し、コンテナに設定が反映されることを確認してみましょう。
 　新しくアプリケーションをデプロイし、そのアプリケーションが使用しているCPUやメモリリソースについて確認してみましょう。
 
-### 5-1.環境変数の設定と動作の確認
+### 4-1.環境変数の設定と動作の確認
 　まずはプロジェクトを作成します。  
   ※名前はご自由に入力ください。但し、OpenShif内で一意である必要があります。
 
 ![project-Deploy1](./6-1-1n.jpg)
 
+### ***カタログ検索で、"Node"と入力し、Node.js + MongoDB (Ephemeral)を選択します。***
 
-![project-Deploy1](./6-1-3.jpg)
-### ***テンプレートの選択画面で、"Node"と入力し、Node.js + MongoDB (Ephemeral)を選択します。***
+![project-Deploy1](./6-1-3n.jpg)
 
-![project-Deploy1](./6-1-4.jpg)
+### ***Add to Projectで、作成したプロジェクトを選択します。***
 
-(確認のみ)このテンプレートをデプロイするために利用されるイメージが表示されています。
+![project-Deploy1](./6-1-5n.jpg)
 
-![project-Deploy1](./6-1-5.jpg)
-### ***下にスクロールし、環境変数として「Administrator Password」欄に適当なパスワードを入力してみましょう。入力がすんだら、「Create」をクリックします。***
+### ***下方へスクロールし、環境変数として「Administrator Password」欄に適当なパスワードを入力してみましょう。入力がすんだら、「Create」をクリックします。***
 
-![project-Deploy1](./6-1-6.jpg)
+![project-Deploy1](./6-1-6n.jpg)
 ### ***「Applications」→「Pods」をクリックします。***
 
 ![project-Deploy1](./6-1-7.jpg)
