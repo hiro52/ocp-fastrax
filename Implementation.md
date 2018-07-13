@@ -487,14 +487,14 @@ devプロジェクトにモックアプリケーションを作成します。
 
 イメージにtestready とprodreadyのTAGを付けます
 
-    $ oc tag cotd:latest cotd:testready -n pipeline-${GUID}-dev
-    $ oc tag cotd:testready cotd:prodready -n pipeline-${GUID}-dev
+    $ oc tag cotd:latest cotd:testready -n pipeline-dev
+    $ oc tag cotd:testready cotd:prodready -n pipeline-dev
 
 イメージストリームの内容及び、testreadyと、prodreadyのTAGが追加されていることを確認します。
 
-    $　oc describe is cotd -n pipeline-${GUID}-dev
+    $　oc describe is cotd -n pipeline-dev
     
-    oc describe is cotd -n pipeline-${GUID}-dev
+    oc describe is cotd -n pipeline-dev
     
     Name:			cotd
     Created:		About an hour ago
@@ -509,20 +509,20 @@ devプロジェクトにモックアプリケーションを作成します。
 
 test, prodプロジェクトにそれぞれ、testreadyのTAG、ProdreadyのTAGがついたイメージからアプリケーションをデプロイします。
 
-    $ oc new-app pipeline-${GUID}-dev/cotd:testready --name=cotd -n pipeline-${GUID}-test
-    $ oc new-app pipeline-${GUID}-dev/cotd:prodready --name=cotd -n pipeline-${GUID}-prod
+    $ oc new-app pipeline-dev/cotd:testready --name=cotd -n pipeline-test
+    $ oc new-app pipeline-dev/cotd:prodready --name=cotd -n pipeline-prod
 
 3つ全てのアプリケーションのルートを作成します。
 
-    $ oc expose service cotd -n pipeline-${GUID}-dev
-    $ oc expose service cotd -n pipeline-${GUID}-test
-    $ oc expose service cotd -n pipeline-${GUID}-prod
+    $ oc expose service cotd -n pipeline-dev
+    $ oc expose service cotd -n pipeline-test
+    $ oc expose service cotd -n pipeline-prod
 
 自動デプロイメントを無効化します。
 
-    $ oc get dc cotd -o yaml -n pipeline-${GUID}-dev | sed 's/automatic: true/automatic: false/g' | oc replace -f -
-    $ oc get dc cotd -o yaml -n pipeline-${GUID}-test| sed 's/automatic: true/automatic: false/g' | oc replace -f -
-    $ oc get dc cotd -o yaml -n pipeline-${GUID}-prod | sed 's/automatic: true/automatic: false/g' | oc replace -f -
+    $ oc get dc cotd -o yaml -n pipeline-dev | sed 's/automatic: true/automatic: false/g' | oc replace -f -
+    $ oc get dc cotd -o yaml -n pipeline-test| sed 's/automatic: true/automatic: false/g' | oc replace -f -
+    $ oc get dc cotd -o yaml -n pipeline-prod | sed 's/automatic: true/automatic: false/g' | oc replace -f -
 
 OpenShift WebUIにログインし、**devプロジェクト**を表示、**「Add to Project」**で、**import YAML / JSON**を表示します。
 ![project-Deploy1](./8-1-15.jpg)
@@ -568,7 +568,7 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**「Ad
 ### 6-2.パイプラインのテスト
 **Jenkins**によるパイプラインの管理を行ってみます。
 
-![project-Deploy1](./8-2-1.jpg)
+![project-Deploy1](./8-2-1.jpg)  
 **「Builds」→「Pipelines」**で、パイプラインが作成されていることを確認します。
 
 ![project-Deploy1](./8-2-2.jpg)
