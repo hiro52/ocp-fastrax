@@ -412,7 +412,7 @@ Podのこの様なアップデート方法を、ローリングアップデー�
 ![project-Deploy1](./7-2-6.jpg)
 
 ### ***上記の例に従って、Strategy の中を編集し、保存します。***
-![project-Deploy1](./7-2-7n.jpg)
+![project-Deploy1](./7-2-7n2.jpg)
 
 ### ***StrategyがRecreateに変更されたことを確認します。***
 ![project-Deploy1](./7-2-7-2n.jpg)
