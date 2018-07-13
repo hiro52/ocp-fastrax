@@ -569,7 +569,7 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**「Ad
 **Jenkins**によるパイプラインの管理を行ってみます。
 
 ![project-Deploy1](./8-2-1.jpg)  
-**「Builds」→「Pipelines」**で、パイプラインが作成されていることを確認します。
+**Builds → Pipelines**で、パイプラインが作成されていることを確認します。
 
 ![project-Deploy1](./8-2-2.jpg)
 **「Start Pipeline」**をクリックし、パイプラインが作成されるのを待ちます。
