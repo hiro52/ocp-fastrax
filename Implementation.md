@@ -61,8 +61,7 @@
 
     # sed -i 's/#log_/log_/' /etc/ansible/ansible.cfg
 
-   今回の環境には、マスターサーバー、インフラノード、ワーカーノードに既にDockerがインストールされ、デーモンが起動しています。  
-   以下のコマンドで確認してみましょう。  
+   今回の環境には、マスターサーバー、インフラノード、ワーカーノードに既にDockerがインストールされ、デーモンが起動しています。以下のコマンドで確認してみましょう。  
 
     # ansible -f 10 nodes -m shell -a "systemctl status docker | grep Active"
   
@@ -73,7 +72,13 @@
 
     # cp /var/preserve/hosts /root/my_ocp_inventory
     
-  中身を確認してみましょう。
+  中身を確認しながら一部編集します。
+  
+    # vi /root/my_ocp_inventory
+
+ ①中身を確認しながら一部編集します。
+ 
+  ①Ansible
   
      
 ## 1-1.プロジェクトの作成
