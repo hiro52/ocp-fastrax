@@ -1,9 +1,9 @@
-# 0.はじめに（本コンテンツの前提等）  
+# 1.はじめに（本コンテンツの前提等）  
 　本コンテンツは、Red Hatがパートナー様向けに提供しているオンラインLAB環境（OPENTLC）を利用したF2Fでのハンズオントレーニングを想定しています。資料としては、一般的にも利用できる流れにはなっていますが、記載の中に独特のGUIDなどというOPENTLC独特の表記や、講師にご確認くださいなどという記載もございますので、別環境でのLABを実施の方は読み飛ばしていただければと思います。また、インプリメンテーションの無い、OpenShiftの使い方に関するLABコンテンツはこちらをご利用ください。
  
  https://github.com/hiro52/ocp-fastrax/blob/master/LAB.md
  
-# 0-1.環境の説明  
+# 1-1.環境の説明  
 　今回OpenShiftのインストールを行う環境は以下を想定しています。環境はOPENTLC前提です。
  
  ・Workstation（SSH接続を行うための踏み台ホスト）  
@@ -22,33 +22,60 @@
   　 内部：node{1,2}.$GUID.internal  
 
  
-# 0-2.環境の説明とOpenShift3.7のインストール  
+# 1-2.前準備とOpenShift3.7のインストール  
  では、上記環境にOpenShift3.7をインストールしてみましょう♪  
  まずは、WorkstationにSSH接続し、以下進めます。  
   ※接続先情報等は別途ご確認ください。  
 
-　rootユーザーになって、LAB環境で利用するGUIDを変数に入れておきましょう。
+　rootユーザーになって、LAB環境で利用するGUIDを変数に入れておきましょう。  
 
     # sudo -i
     # echo ${GUID}
     # export GUID=$(hostname | cut -d. -f2)
     # echo ${GUID}; echo "export GUID=${GUID}" >> /root/.bashrc
 
-　OpenShift マスターノードにssh接続し、同じことを実施します。
+　OpenShift マスターノードにssh接続し、同じことを実施します。  
  
     # ssh master1.$GUID.internal
     # sudo -i
     # export GUID=$(hostname | cut -d. -f2)
     # echo $GUID; echo "export GUID=${GUID}" >> /root/.bashrc
 
-  exit2回で、Workstation端末に戻ります。
-
+  exit2回で、Workstation端末に戻りWorkstation上で以下継続します。  
 
     # exit 
-    
-# 
-    
+    # exit 
+
+  今回のLAB環境には、Ansibleを使った環境チェックのためのHostsファイルが作成されています。中身を見てみましょう。  
+
+    # cat /etc/ansible/hosts 
+
+  （確認のみ）Ansibleのコマンドを叩いて、ホストの内容を確認し、Ansible ping で応答も見てみましょう♪
+
+    # ansible masters --list-hosts
+    # ansible nodes --list-hosts
+    # ansible all --list-hosts
+    # ansible all -m ping
+
+   Playbook 実行時のログを有効にします。
+
+    # sed -i 's/#log_/log_/' /etc/ansible/ansible.cfg
+
+   今回の環境には、マスターサーバー、インフラノード、ワーカーノードに既にDockerがインストールされ、デーモンが起動しています。  
+   以下のコマンドで確認してみましょう。  
+
+    # ansible -f 10 nodes -m shell -a "systemctl status docker | grep Active"
   
+  ![project-Deploy1](./1-1n.jpg)
+
+   いよいよインストールです。OpenShiftのインストールにはAnsibleを利用します。  
+   インストールのためのインベントリファイルは、/var/preserve/hosts にありますので、リネームしコピーします。
+
+    # cp /var/preserve/hosts /root/my_ocp_inventory
+    
+  中身を確認してみましょう。
+  
+     
 ## 1-1.プロジェクトの作成
  OpenShiftは、”プロジェクト”　単位でアプリケーションや権限などを管理しています。  
  アプリケーションを作成するにはまずプロジェクトを作成します。  
