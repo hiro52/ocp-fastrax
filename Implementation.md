@@ -76,11 +76,27 @@
   
     # vi /root/my_ocp_inventory
 
- ①中身を確認しながら一部編集します。
+
+  ①Ansibleがコマンド実行の際、root権限を利用することの許可と、接続時にはec2-userを利用することの指定です。
+  ②インストールタイプとして、Red Hat のOpenShiftを選択しています。
+  ③コンテナでのインストールも可能ですが、ここでは、Falseを選択し、RPMインストールを行います。
+  ④デプロイメントの際、リソースが少ないとエラーとなります。今回の環境は潤沢なリソースがないので、チェックを回避するオプションを入れています。
+  ⑤ポッドが、env=appラベルの付いたノードで実行される様指定しています。
+
+　その下のオレンジ色の資格で囲った部分は削除します！
  
-  ①Ansible
+  ![project-Deploy1](./1-2n.jpg)
   
-     
+　さらに下の方を確認しましょう。
+ 
+  ①cockpit のインストールを行う指定とそのパラメータの設定です。
+
+　以下を追記します。
+ 
+ # Configure additional projects
+openshift_additional_projects={'my-infra-project-test': {'default_node_selector': 'env=apps'}}
+ 
+
 ## 1-1.プロジェクトの作成
  OpenShiftは、”プロジェクト”　単位でアプリケーションや権限などを管理しています。  
  アプリケーションを作成するにはまずプロジェクトを作成します。  
