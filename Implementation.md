@@ -9,17 +9,17 @@
  ・Workstation（SSH接続を行うための踏み台ホスト）  
  ・NFS  
  ・Load Balancer  
-   外部：loadbalancer.$GUID.example.opentlc.com  
-   内部：loadbalancer1.$GUID.internal  
+ 　　外部：loadbalancer.$GUID.example.opentlc.com  
+   　内部：loadbalancer1.$GUID.internal  
  ・OpenShift マスターサーバー x 3 台  
-   外部：master{1,2,3}.$GUID.example.opentlc.com  
-   内部：master{1,2,3}.$GUID.internal  
+   　外部：master{1,2,3}.$GUID.example.opentlc.com  
+   　内部：master{1,2,3}.$GUID.internal  
  ・OpenShift インフラノード x 2 台  
-   外部：infranode{1,2}.$GUID.example.opentlc.com  
-   内部：infranode{1,2}.$GUID.internal  
+   　外部：infranode{1,2}.$GUID.example.opentlc.com  
+   　内部：infranode{1,2}.$GUID.internal  
  ・OpenShift ワーカーノード x 2 台  
-   外部： node{1,2}.$GUID.example.opentlc.com  
-   内部：node{1,2}.$GUID.internal  
+  　 外部： node{1,2}.$GUID.example.opentlc.com  
+  　 内部：node{1,2}.$GUID.internal  
 
  
 # 0-2.環境の説明とOpenShift3.7のインストール  
@@ -29,6 +29,8 @@
     
     # sudo -i  
     # echo ${GUID}
+    # export GUID=$(hostname | cut -d. -f2)
+    # echo ${GUID}; echo "export GUID=${GUID}" >> /root/.bashrc
   
 ## 1-1.プロジェクトの作成
  OpenShiftは、”プロジェクト”　単位でアプリケーションや権限などを管理しています。  
