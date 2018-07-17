@@ -9,7 +9,7 @@
  ・Workstation（SSH接続を行うための踏み台ホスト）  
  ・NFS  
  ・Load Balancer  
- 　　外部：loadbalancer.$GUID.example.opentlc.com  
+   　外部：loadbalancer.$GUID.example.opentlc.com  
    　内部：loadbalancer1.$GUID.internal  
  ・OpenShift マスターサーバー x 3 台  
    　外部：master{1,2,3}.$GUID.example.opentlc.com  
@@ -26,11 +26,12 @@
  では、上記環境にOpenShift3.7をインストールしてみましょう♪  
  まずは、WorkstationにSSH接続し、以下進めます。  
   ※接続先情報等は別途ご確認ください。  
-    
+    rootユーザーになって、LAB環境で利用するGUIDを変数に入れておきましょう。
     # sudo -i  
     # echo ${GUID}
     # export GUID=$(hostname | cut -d. -f2)
     # echo ${GUID}; echo "export GUID=${GUID}" >> /root/.bashrc
+    
   
 ## 1-1.プロジェクトの作成
  OpenShiftは、”プロジェクト”　単位でアプリケーションや権限などを管理しています。  
