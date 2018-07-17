@@ -1,12 +1,35 @@
-# 0.環境の説明とOpenShift3.7のインストール  
-　本コンテンツは、Red Hatがパートナー様向けに提供しているオンラインLAB環境を利用することを想定しています。一般的にも利用できるコンテンツとはなっていますが、記載の中に独特のGUIDなどというOPENTLC独特の表記もございますので、別環境でのLABを実施の方は読み飛ばしていただければと思います。また、インプリメンテーションの無い、OpenShiftの使い方に関するLABコンテンツはこちらをご利用ください。
+# 0.はじめに（本コンテンツの前提等）  
+　本コンテンツは、Red Hatがパートナー様向けに提供しているオンラインLAB環境（OPENTLC）を利用したF2Fでのハンズオントレーニングを想定しています。資料としては、一般的にも利用できる流れにはなっていますが、記載の中に独特のGUIDなどというOPENTLC独特の表記や、講師にご確認くださいなどという記載もございますので、別環境でのLABを実施の方は読み飛ばしていただければと思います。また、インプリメンテーションの無い、OpenShiftの使い方に関するLABコンテンツはこちらをご利用ください。
  
+ https://github.com/hiro52/ocp-fastrax/blob/master/LAB.md
  
+# 0-1.環境の説明  
+　今回OpenShiftのインストールを行う環境は以下を想定しています。環境はOPENTLC前提です。
  
-今回OpenShiftのインストールを行う環境は以下を想定しています。
- 
- ・
+ ・Workstation（SSH接続を行うための踏み台ホスト）  
+ ・NFS  
+ ・Load Balancer  
+   外部：loadbalancer.$GUID.example.opentlc.com  
+   内部：loadbalancer1.$GUID.internal  
+ ・OpenShift マスターサーバー x 3 台  
+   外部：master{1,2,3}.$GUID.example.opentlc.com  
+   内部：master{1,2,3}.$GUID.internal  
+ ・OpenShift インフラノード x 2 台  
+   外部：infranode{1,2}.$GUID.example.opentlc.com  
+   内部：infranode{1,2}.$GUID.internal  
+ ・OpenShift ワーカーノード x 2 台  
+   外部： node{1,2}.$GUID.example.opentlc.com  
+   内部：node{1,2}.$GUID.internal  
 
+ 
+# 0-2.環境の説明とOpenShift3.7のインストール  
+ では、上記環境にOpenShift3.7をインストールしてみましょう♪  
+ まずは、WorkstationにSSH接続し、以下進めます。  
+  ※接続先情報等は別途ご確認ください。  
+    
+    # sudo -i  
+    # echo ${GUID}
+  
 ## 1-1.プロジェクトの作成
  OpenShiftは、”プロジェクト”　単位でアプリケーションや権限などを管理しています。  
  アプリケーションを作成するにはまずプロジェクトを作成します。  
