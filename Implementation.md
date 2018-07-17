@@ -33,7 +33,20 @@
     # echo ${GUID}
     # export GUID=$(hostname | cut -d. -f2)
     # echo ${GUID}; echo "export GUID=${GUID}" >> /root/.bashrc
-    # 
+
+　OpenShift マスターノードにssh接続し、同じことを実施します。
+ 
+    # ssh master1.$GUID.internal
+    # sudo -i
+    # export GUID=$(hostname | cut -d. -f2)
+    # echo $GUID; echo "export GUID=${GUID}" >> /root/.bashrc
+
+  exit2回で、Workstation端末に戻ります。
+
+
+    # exit 
+    
+# 
     
   
 ## 1-1.プロジェクトの作成
