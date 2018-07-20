@@ -186,10 +186,12 @@
 
 アドレスは、ロードバランサーの外部IPアドレスです。  
 https://loadbalancer.$GUID.example.opentlc.com  
-
+ user:karla  
+ password:r3dh4t1!  
+ 
    <img src="2-1-1n.jpg" alt="attach:cat" title="attach:cat" width="700">  
-   　　   　※Webコンソールのアドレス、ログインIDとパスワードは別途ご確認ください。  
-           
+
+
 ### ***1-1-2. Name欄に、"nexus-your-name"を入力し、Createをクリックします。***  
  ※プロジェクト名は一意ある必要がありますのでご注意ください。
 <img src="2-1-2.jpg" alt="attach:cat" title="attach:cat" width="700">  
