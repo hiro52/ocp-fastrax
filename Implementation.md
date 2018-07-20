@@ -93,7 +93,7 @@
 
   ![project-Deploy1](./1-3n2.jpg)
 
-  # OpenShiftのマスターに対する設定を行います。  
+  ### OpenShiftのマスターに対する設定を行います。  
 
   1. OpenShift のAPIで利用するポート番号をしています。デフォルトは、8443です。  
   2. OpenShiftクラスタで利用するHAに関する設定を行います。現状サポートされるのは"native"のみです。  
