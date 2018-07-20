@@ -136,7 +136,7 @@
   2. Routerの数を指定します。指定されない場合は、セレクターで指定されたホストの数となります。  
   3. Router同様、レジストリに対するノードセレクターはオプションです。指定を行うとマッチしたホストが存在する場合にのみ作成されます。  
   4. Router同様、レジストリの数を指定します。指定されない場合は、セレクターで指定されたホストの数となります。  
-  5. レジストリをサポートするストレージ関連の設定です。
+  5. レジストリをサポートするストレージ関連の設定です。  
   
   ![project-Deploy1](./1-8n.jpg)
 
@@ -147,15 +147,23 @@
   3. テンプレートサービスブローカーを有効化します。（1の有効化が必須）  
   4. テンプレートサービスブローカーのホストの指定です。  
   5. バグに関するワークアラウンドです。  
-  6. テンプレートサービスブローカーによってサービスされる1つ以上の名前空間です。
+  6. テンプレートサービスブローカーによってサービスされる1つ以上の名前空間です。  
 
 
   ![project-Deploy1](./1-9n.jpg)
   
-　以下を追記します。
+  
+  ### 以下は、Ansible Hosts ファイルで、OpenShiftを構成するホストに関する設定です。  
+  
+  ![project-Deploy1](./1-10n.jpg)
+  
  
- # Configure additional projects
-openshift_additional_projects={'my-infra-project-test': {'default_node_selector': 'env=apps'}}
+ # OpenShiftインストーラーの起動  
+ 
+ 以下のコマンドで、OpenShiftインストーラーを起動します。
+ 　※インストール完了までに20分ほどかかかります。適当に休憩を取りましょう♪
+ 
+    # ansible-playbook -f 20 -i /root/my_ocp_inventory /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
  
 
 ## 1-1.プロジェクトの作成
