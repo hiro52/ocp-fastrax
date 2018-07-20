@@ -119,6 +119,10 @@
 
   ![project-Deploy1](./1-6n.jpg)
 
+  後ほど、ユーザー名：karla, andrewでOpenShift環境に接続します。既にこのユーザーが作成されていることを確認しておきます。
+  コンソール画面に戻って、以下のコマンドでユーザーを確認sてみましょう。
+  
+    # cat /root/htpasswd.openshift
 
   ### OpenShiftのLogに関する設定を行います。   
 
@@ -165,12 +169,22 @@
  
     # ansible-playbook -f 20 -i /root/my_ocp_inventory /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
  
+ # OpenShiftアドミン権限の設定  
+ 
+ 既に設定されているユーザー、andrewとkarlaの内、andrewにクラスターアドミン権限を与えてみます。
 
+    # oc login -u system:admin https://loadbalancer.$GUID.example.opentlc.com  
+    # oadm policy add-cluster-role-to-user cluster-admin andrew
+    
+    
 ## 1-1.プロジェクトの作成
  OpenShiftは、”プロジェクト”　単位でアプリケーションや権限などを管理しています。  
  アプリケーションを作成するにはまずプロジェクトを作成します。  
    
 ### ***1-1-1. OpenShift のWebコンソールにログインし、"New Project" をクリックします。***  
+
+アドレスは、ロードバランサーの外部IPアドレスです。  
+https://loadbalancer.$GUID.example.opentlc.com  
 
    <img src="2-1-1n.jpg" alt="attach:cat" title="attach:cat" width="700">  
    　　   　※Webコンソールのアドレス、ログインIDとパスワードは別途ご確認ください。  
