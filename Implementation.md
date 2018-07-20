@@ -162,14 +162,14 @@
   ![project-Deploy1](./1-10n.jpg)
   
  
- # OpenShiftインストーラーの起動  
+ ### OpenShiftインストーラーの起動  
  
  以下のコマンドで、OpenShiftインストーラーを起動します。
  　※インストール完了までに20分ほどかかかります。適当に休憩を取りましょう♪
  
     # ansible-playbook -f 20 -i /root/my_ocp_inventory /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
  
- # OpenShiftアドミン権限の設定  
+ ### OpenShiftアドミン権限の設定  
  
  既に設定されているユーザー、andrewとkarlaの内、andrewにクラスターアドミン権限を与えてみます。
 
