@@ -256,7 +256,7 @@ admin/admin123
 ### ***2-1-2. 名前を入力し、「Create」をクリックします。
 ※名前はご自由に入力ください。但し、OpenShif内で一意である必要があります。
 
-![project-Deploy1](./3-1-2.jpg)
+![project-Deploy1](./3-1-2n.jpg)
 
 ### ***2-1-3. 今度はテンプレートからデプロイしてみます。検索画面で、"cakephp" を入力。CakePHP +MySQL　の「Ephemeral」を選択します。***
 
