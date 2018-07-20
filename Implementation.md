@@ -171,9 +171,10 @@
  
  ### OpenShiftアドミン権限の設定  
  
- 既に設定されているユーザー、andrewとkarlaの内、andrewにクラスターアドミン権限を与えてみます。
+ 既に設定されているユーザー、andrewとkarlaの内、andrewにクラスターアドミの権限を与えてみます。
 
-    # oc login -u system:admin https://loadbalancer.$GUID.example.opentlc.com  
+    # ssh master1.$GUID.internal
+    # oc login -u system:admin 
     # oadm policy add-cluster-role-to-user cluster-admin andrew
     
     
