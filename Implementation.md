@@ -370,7 +370,7 @@ cakephp-mysql-exampleの方は、先ほどデプロイしましたので、LastV
 
 プロジェクト内で有効なPodが表示されることを確認します。「Completed」、「Running」などのステータスが確認できます。Podの一つをクリックします。
 
-![project-Deploy1](./3-4-2.jpg)
+![project-Deploy1](./3-4-2n.jpg)
 
 「Details」タブで以下が確認できます。  
 ・Podの状態  
