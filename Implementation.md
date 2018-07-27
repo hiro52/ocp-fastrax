@@ -490,8 +490,8 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
     Namespace:      new-apps
     Resource        Used    Hard
     --------        ----    ----
-    limits.cpu      0       2
-    limits.memory   1536Mi  8Gi
+    limits.cpu      300m    2
+    limits.memory   1Gi  8Gi
     pods            2       5
     services        2       5
 
