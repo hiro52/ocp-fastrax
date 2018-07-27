@@ -444,13 +444,45 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
       name: compute-resources
     spec:
       hard:
-        pods: 4
-        limits.cpu: 1
+        pods: 5
+        limits.cpu: 2
         limits.memory: 8Gi
-        services: 3
+        services: 5
+    EOF
+    
+    # cat << EOF > /root/compute-resource-limits.yaml
+    apiVersion: v1
+    kind: "LimitRange"
+    metadata:
+      name: "core-resource-limits"
+    spec:
+      limits:
+        - type: "Pod"
+          max:
+            cpu: "2"
+            memory: "1Gi"
+          min:
+            cpu: "200m"
+            memory: "6Mi"
+        - type: "Container"
+          max:
+            cpu: "2"
+            memory: "1Gi"
+          min:
+            cpu: "100m"
+            memory: "4Mi"
+          default:
+            cpu: "300m"
+            memory: "200Mi"
+          defaultRequest:
+            cpu: "200m"
+            memory: "100Mi"
+          maxLimitRequestRatio:
+            cpu: "10"
     EOF
 
     # oc create -f compute-resources.yaml -n <Project Name>
+    # oc create -f compute-resource-limits.yaml -n <Project Name>
       ※最後のパラメータは自身のプロジェクト名に変更ください。
     # oc project <Project Name>
     # oc describe quota
@@ -458,10 +490,10 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
     Namespace:      new-apps
     Resource        Used    Hard
     --------        ----    ----
-    limits.cpu      0       1
-    limits.memory   1Gi     8Gi
-    pods            2       4
-    services        2       3
+    limits.cpu      0       2
+    limits.memory   1536Mi  8Gi
+    pods            2       5
+    services        2       5
 
 再度、OpenShift Master GUIで、「Resources」→「Quota」を確認してみてみると、以下のようなリソース利用状況が確認できます。  
 
