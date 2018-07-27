@@ -350,8 +350,10 @@ cakephp-mysql-exampleの方は、先ほどデプロイしましたので、LastV
 ![project-Deploy1](./3-3-10.jpg)
 
 「Environment」タブをクリックします。
-デプロイ時に設定された環境変数が確認できます。環境変数はPod内で、ユーザー名やデータベース名など様々なパラメーターを設定することが可能で、また、ユーザー自身での追加も可能です。
-確認が終了したら、「Events」タブをクリックします。
+デプロイ時に設定された環境変数が確認できます。環境変数はPod内で、ユーザー名やデータベース名など様々なパラメーターを設定することが可能で、また、ユーザー自身での追加も可能です。  
+　※追加の場合は、ページ上部にある、以下のリンクをクリックし編集モードにします。  
+　Environment variables can be edited on deployment config cakephp-mysql-example  
+確認が終了したら、「Events」タブをクリックします。  
 
 ![project-Deploy1](./3-3-11.jpg)
 
