@@ -540,7 +540,7 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 ### ***nodejs-mongodb-example-xxxをクリックします。***
 
 ![project-Deploy1](./6-1-8.jpg)
-### ***Terminalタブを開き、echo $MONGODB_ADMIN_PASSWORDを入力し、デプロイ時に設定したパスワードが表示されることを確認します。
+### ***Terminalタブを開き、echo $MONGODB_ADMIN_PASSWORDを入力し、デプロイ時に設定したパスワードが表示されることを確認します。***
 さらに、以下のコマンドで、OpenShiftが自動生成したパスワードも確認します。  
 ### ***echo $MONGODB_PASSWORD***
 
