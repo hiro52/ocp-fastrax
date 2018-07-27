@@ -450,7 +450,7 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
         services: 5
     EOF
     
-    # cat << EOF > /root/compute-resource-limits.yaml
+    # cat << EOF > /root/core-resource-limits.yaml
     apiVersion: v1
     kind: "LimitRange"
     metadata:
@@ -482,7 +482,7 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
     EOF
 
     # oc create -f compute-resources.yaml -n <Project Name>
-    # oc create -f compute-resource-limits.yaml -n <Project Name>
+    # oc create -f core-resource-limits.yaml -n <Project Name>
       ※最後のパラメータは自身のプロジェクト名に変更ください。
     # oc project <Project Name>
     # oc describe quota
