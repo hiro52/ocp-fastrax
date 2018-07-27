@@ -497,7 +497,7 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 
 再度、OpenShift Master GUIで、「Resources」→「Quota」を確認してみてみると、以下のようなリソース利用状況が確認できます。  
 
-![project-Deploy1](./4-1-1-3n.jpg)
+![project-Deploy1](./4-1-1-3-2n.jpg)
 
 ・このプロジェクトの利用CPU/メモリ  
 ・このプロジェクトに設定されているクォータ  
