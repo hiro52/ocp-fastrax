@@ -650,7 +650,7 @@ OPENTLC アカウントを利用し、sshで接続します。  
 ##### ***```$ oc login -u karla https://loadbalancer1.<guid>.example.opentlc.com/```***
 
 ### 6-1.プロジェクトの作成とJenkinsのデプロイ
-３つの新しいプロジェクト(dev/test/ prod)を作成します。コマンドを4個実行します。 随時、OpenShiftのGUIでも作成の様子を確認してみましょう。
+３つの新しいプロジェクト(dev/test/ prod)を作成します。コマンドを3個実行します。 随時、OpenShiftのGUIでも作成の様子を確認してみましょう。
 
     $ oc new-project pipeline-dev --description="Cat of the Day Development Environment" --display-name="Cat Of The Day - Dev"
     $ oc new-project pipeline-test --description="Cat of the Day Testing Environment" --display-name="Cat Of The Day - Test"
