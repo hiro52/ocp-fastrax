@@ -434,10 +434,10 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 　※接続先等は別途ご確認ください。  
 
     $ sudo -i
-    # oc login <OpenShift Master1 IP>
+    # oc login -u andrew https://loadbalancer1.${GUID}.example.opentlc.com/
     　login ID:andrew
       Password:r3dh4t1! 
-    # cat << EOF > /root/compute-resources2.yaml
+    # cat << EOF > /root/compute-resources.yaml
     apiVersion: v1
     kind: ResourceQuota
     metadata:
@@ -450,7 +450,9 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
         services: 3
     EOF
 
-    # oc create -f compute-resources.yaml -n new-apps
+    # oc create -f compute-resources.yaml -n <Project Name>
+      ※最後のパラメータは自身のプロジェクト名に変更ください。
+    # oc project <Project Name>
     # oc describe quota
     Name:           compute-resources
     Namespace:      new-apps
