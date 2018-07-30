@@ -694,7 +694,8 @@ devから、test、prodへのイメージの引用を許可します。
     $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-test -n pipeline-dev
     $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-prod -n pipeline-dev
 
-devプロジェクトにモックアプリケーションを作成します。
+devプロジェクトにモックアプリケーションを作成します。  
+※完了には5分くらいかかります。以下のコマンド、もしくはGUIで作成完了を確認してください。  
 
     $ oc new-app https://github.com/devops-with-openshift/cotd -n pipeline-dev
     （作成完了の確認は以下）
