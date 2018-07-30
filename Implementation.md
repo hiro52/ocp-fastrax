@@ -740,10 +740,10 @@ test, prodプロジェクトにそれぞれ、testreadyのTAG、ProdreadyのTAG�
     $ oc get dc cotd -o yaml -n pipeline-test| sed 's/automatic: true/automatic: false/g' | oc replace -f -
     $ oc get dc cotd -o yaml -n pipeline-prod | sed 's/automatic: true/automatic: false/g' | oc replace -f -
 
-OpenShift WebUIにログインし、**devプロジェクト**を表示、**「Add to Project」**で、**import YAML / JSON**を表示します。
+OpenShift WebUIにログインし、**devプロジェクト**を表示、**Add to Project**で、**import YAML / JSON**を表示します。
 ![project-Deploy1](./8-1-15.jpg)
 
-以下のテキストをコピーペーストします。**「Create」**をクリックし、ビルドコンフィグパイプラインを作成します。
+以下のテキストをコピーペーストします。**Create** をクリックし、ビルドコンフィグパイプラインを作成します。
 
     apiVersion: v1
     items:
