@@ -290,9 +290,6 @@ admin/admin123
 ![project-Deploy1](./3-2-6-3.jpg)
 ![project-Deploy1](./3-2-6-4.jpg) ![project-Deploy1](./3-2-6-5.jpg)  
 
-「Metrics」がそもそも表示されないケースもあるようです。その際は、まず、以下にアクセスし、
-MetricsServiceがStartになっていることを確認の上、master 1/2/3をリブートしてみてください。
-
 ### 2-2.サービスとビルドの確認
 　今作成したアプリケーションに関するサービスとビルドについて詳細を確認してみましょう。
  「Application」→「Services」をクリック。
