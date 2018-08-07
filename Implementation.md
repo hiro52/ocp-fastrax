@@ -853,9 +853,9 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**Add t
       openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-prod', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false'
       sleep 60
       sh 'curl http://cotd-pipeline-prod.apps.${GUID}.example.opentlc.com/data/ | grep cats -q'
+      }
+     }
     }
-  }
-}
     
      
  この内容は以下の通りです。  
