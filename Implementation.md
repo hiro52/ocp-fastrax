@@ -814,7 +814,7 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**Add t
 パイプラインを編集します。2行目のGUID=xxxxを自身のGUIDに変更した上で、下記テキストをコピーペーストします。  
 
     node {
-   withEnv(['GUID=xxxx']) {
+    withEnv(['GUID=xxxx']) {
 
     stage ("Build") {
       echo '*** Build Starting ***'
