@@ -671,7 +671,7 @@ OPENTLC アカウントを利用し、sshで接続します。  
      --> Success
     Run 'oc status' to view your app.
 
-GUI でPod が立ち上がった（Podの青い丸が表示されている）ことを確認した上で、**Jenkins**にログインしてみます。
+GUI でプロジェクトpipeline-devに入り、Pod が立ち上がった（Podの青い丸が表示されている）ことを確認した上で、**Jenkins**にログインしてみます。
  admin / password です。
 接続先は、Podのルートで確認です！
 ![project-Deploy1](./8-1-7.jpg)
