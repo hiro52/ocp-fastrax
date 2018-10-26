@@ -236,78 +236,9 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 
 ![project-Deploy1](./4-1-1.jpg)
 
-まだクォータが設定されていないので、何も表示されません。このプロジェクトに対し、クォータを設定してみます。  
+以下のようなリソース利用状況が確認できます。  
 
-![project-Deploy1](./4-1-1-2n.jpg)
-
-クォータの設定はコマンドラインから行います。sshクライアントで、Workstation 環境に接続します。  
-　※接続先等は別途ご確認ください。  
-
-    $ sudo -i
-    # oc login -u andrew https://loadbalancer1.${GUID}.example.opentlc.com/
-    　login ID:andrew
-      Password:r3dh4t1! 
-    # cat << EOF > /root/compute-resources.yaml
-    apiVersion: v1
-    kind: ResourceQuota
-    metadata:
-      name: compute-resources
-    spec:
-      hard:
-        pods: 5
-        limits.cpu: 2
-        limits.memory: 8Gi
-        services: 5
-    EOF
-    
-    # cat << EOF > /root/core-resource-limits.yaml
-    apiVersion: v1
-    kind: "LimitRange"
-    metadata:
-      name: "core-resource-limits"
-    spec:
-      limits:
-        - type: "Pod"
-          max:
-            cpu: "2"
-            memory: "1Gi"
-          min:
-            cpu: "200m"
-            memory: "6Mi"
-        - type: "Container"
-          max:
-            cpu: "2"
-            memory: "1Gi"
-          min:
-            cpu: "100m"
-            memory: "4Mi"
-          default:
-            cpu: "300m"
-            memory: "200Mi"
-          defaultRequest:
-            cpu: "200m"
-            memory: "100Mi"
-          maxLimitRequestRatio:
-            cpu: "10"
-    EOF
-
-    # oc create -f compute-resources.yaml -n <Project Name>
-    # oc create -f core-resource-limits.yaml -n <Project Name>
-      ※最後のパラメータは自身のプロジェクト名に変更ください。
-    # oc project <Project Name>
-    # oc describe quota
-    Name:           compute-resources
-    Namespace:      new-apps
-    Resource        Used    Hard
-    --------        ----    ----
-    limits.cpu      300m    2
-    limits.memory   1Gi  8Gi
-    pods            2       5
-    services        2       5
-
-再度、OpenShift Master GUIで、「Resources」→「Quota」を確認してみてみると、以下のようなリソース利用状況が確認できます。  
-
-![project-Deploy1](./4-1-1-3-3n.jpg)
+![project-Deploy1](./4-1-1-3-3nn.jpg)
 
 クォータの効果を確認するため、「Overview」をクリックし、Podを5に増やしてみましょう。  
 ![project-Deploy1](./4-1-3n.jpg)
