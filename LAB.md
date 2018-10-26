@@ -84,9 +84,9 @@ admin/admin123
 
 ![project-Deploy1](./3-1-2n.jpg)
 
-### ***3-1-3. 今度はテンプレートからデプロイしてみます。検索画面で、"cakephp" を入力。CakePHP +MySQL　の「Ephemeral」を選択します。***
+### ***3-1-3. 今度はテンプレートからデプロイしてみます。検索画面で、"cakephp" を入力。CakePHP +MySQL　を選択します。***
 
-![project-Deploy1](./3-2-1n.jpg)
+![project-Deploy1](./3-2-1nn.jpg)
 
 ### ***3-1-4. 一番上のAdd to Projectで、作成したプロジェクトを選択し、さらに続く設定で以下が可能なことを確認の上、一番下の「Create」をクリックし、デプロイを開始します。***
 
