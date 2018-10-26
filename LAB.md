@@ -266,7 +266,7 @@ Qutaに表示される値の変化を確認します。
 
 ![project-Deploy1](./6-1-5n.jpg)
 
-### ***下方へスクロールし、環境変数として「Administrator Password」欄に適当なパスワードを入力してみましょう。入力がすんだら、「Create」をクリックします。***
+### ***下方へスクロールし、環境変数として「Database Administrator Password」欄に適当なパスワードを入力してみましょう。入力がすんだら、「Create」をクリックします。***
 
 ![project-Deploy1](./6-1-6n.jpg)
 ### ***「Applications」→「Pods」をクリックします。***
