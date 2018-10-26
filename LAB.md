@@ -10,7 +10,7 @@
    
 ### ***2-1-1. OpenShift のWebコンソールにログインし、"New Project" をクリックします。***  
 
-Web ブラウザで以下にアクセスします。  
+アクセス先URLは以下の通りです。  
  https://master.na39.openshift.opentlc.com/  
 
 IDとパスワードは、ご自身のOPENTLCのID及びパスワードです。  
