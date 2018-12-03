@@ -419,10 +419,8 @@ Podのこの様なアップデート方法を、ローリングアップデー�
 ### ***上記の例に従って、Strategy の中を編集し、保存します。***
 ![project-Deploy1](./7-2-7n2.jpg)
 
-### ***StrategyがRecreateに変更されたことを確認します。***
-![project-Deploy1](./7-2-7-2n.jpg)
-
 <変更前>  
+
     strategy:  
       activeDeadlineSeconds: 21600  
       resources: {}  
@@ -435,11 +433,15 @@ Podのこの様なアップデート方法を、ローリングアップデー�
       type: Rolling
     
 <変更後>  
+
     strategy:  
       activeDeadlineSeconds: 21600  
       resources: {} 
       type: Recreate
-      
+
+### ***StrategyがRecreateに変更されたことを確認します。***
+![project-Deploy1](./7-2-7-2n.jpg)
+
 ### ***「Deploy」をクリックし、「Overview」を表示します。***
 ![project-Deploy1](./7-2-8.jpg)
 
@@ -449,13 +451,11 @@ Podのこの様なアップデート方法を、ローリングアップデー�
 
 ## 7.アプリケーションのライフサイクル管理
 Jenkinsを使ったアプリケーションライフサイクルの管理を行います。  
-このラボは、コマンドラインを多用しますので、SSHで接続できることをまず確認してみます。  
-OPENTLC アカウントを利用し、sshで接続します。  
+OpenShift マスターサーバーにSSH接続します。
 
-##### ***```$ ssh -i ~/.ssh/yourprivatekey.key opentlc-user@bastion.<guid>.example.opentlc.com```***  
-続いて、OpenShift環境へログインです。user名 "karla" でOpenShiftマスターにログインします。  
-パスワードは、r3dh4t1!です。  
-##### ***```$ oc login -u karla https://loadbalancer1.<guid>.example.opentlc.com/```***
+続いて、OpenShift環境へログインです。userアカウント（userXX）でログインします。 
+
+##### ***```$ oc login -u userXX https://<OpenShift Master IP>/```***
 
 ### 7-1.プロジェクトの作成とJenkinsのデプロイ
 ３つの新しいプロジェクト(dev/test/ prod)を作成します。コマンドを3個実行します。 随時、OpenShiftのGUIでも作成の様子を確認してみましょう。
