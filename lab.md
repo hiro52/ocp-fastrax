@@ -1,7 +1,5 @@
 # 1.はじめに（本コンテンツの前提等）  
-　本コンテンツは、Red Hatがパートナー様向けに提供している製品デモ環境（RHPDS）を利用したF2Fでのハンズオントレーニングを想定しています。資料としては、一般的にも利用できる流れにはなっていますが、OPENTLCならではの表記もございますのでご了承ください。また、インプリメンテーションの無い、OpenShiftの使い方に関するLABコンテンツはこちらをご利用ください。
- 
- https://github.com/hiro52/ocp-fastrax/blob/OCP3.9-Shared/LAB.md
+　本コンテンツは、Red Hatがパートナー様向けに提供している製品デモ環境（RHPDS）を利用したF2Fでのハンズオントレーニング用の資料です。Webコンソールでのコンテナデプロイなど、一般的なOpenShiftを学ぶコンテンツとしても利用可能ですが、RHPDS独自の記載もあります事、ご了承ください。
  
 # 1-1.環境の説明  
 　環境はRHPDS OpenShift 3.11 前提です。
@@ -10,6 +8,8 @@
  ・OpenShift インフラノード x 1 台  
  ・OpenShift ワーカーノード x 1台～（ユーザー数の1/5）  
  ・NFS  
+ 
+ 具体的な接続先アドレスや必要なID/パスワード等は講師からご確認ください。
  
 ## 2-1.プロジェクトの作成
  OpenShiftは、”プロジェクト”　単位でアプリケーションや権限などを管理しています。  
@@ -255,17 +255,15 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 
 ![project-Deploy1](./4-1-1.jpg)
 
-まだクォータが設定されていないので、何も表示されません。このプロジェクトに対し、クォータを設定してみます。  
+リミットレンジは設定済みですが、クォータが設定されていないので、クォータには何も表示されません。このプロジェクトに対し、クォータを設定してみます。  
 
 ![project-Deploy1](./4-1-1-2n.jpg)
 
-クォータの設定はコマンドラインから行います。sshクライアントで、Workstation 環境に接続します。  
-　※接続先等は別途ご確認ください。  
+クォータの設定はコマンドラインから行います。sshクライアントで、OpenShift 環境に接続します。  
+接続先は、OpenShift Web コンソールと同じFQDN名です。
+　※ID/パスワード等は別途講師にご確認ください。  
 
     $ sudo -i
-    # oc login -u andrew https://loadbalancer1.${GUID}.example.opentlc.com/
-    　login ID:andrew
-      Password:r3dh4t1! 
     # cat << EOF > /root/compute-resources.yaml
     apiVersion: v1
     kind: ResourceQuota
@@ -279,39 +277,7 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
         services: 5
     EOF
     
-    # cat << EOF > /root/core-resource-limits.yaml
-    apiVersion: v1
-    kind: "LimitRange"
-    metadata:
-      name: "core-resource-limits"
-    spec:
-      limits:
-        - type: "Pod"
-          max:
-            cpu: "2"
-            memory: "1Gi"
-          min:
-            cpu: "200m"
-            memory: "6Mi"
-        - type: "Container"
-          max:
-            cpu: "2"
-            memory: "1Gi"
-          min:
-            cpu: "100m"
-            memory: "4Mi"
-          default:
-            cpu: "300m"
-            memory: "200Mi"
-          defaultRequest:
-            cpu: "200m"
-            memory: "100Mi"
-          maxLimitRequestRatio:
-            cpu: "10"
-    EOF
-
     # oc create -f compute-resources.yaml -n <Project Name>
-    # oc create -f core-resource-limits.yaml -n <Project Name>
       ※最後のパラメータは自身のプロジェクト名に変更ください。
     # oc project <Project Name>
     # oc describe quota
@@ -324,14 +290,14 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
     pods            2       5
     services        2       5
 
-再度、OpenShift Master GUIで、「Resources」→「Quota」を確認してみてみると、以下のようなリソース利用状況が確認できます。  
+再度、OpenShift Master GUIで、「Resources」→「Quota」を確認してみてみると、以下のようなリソース利用状況が確認できます。（青いスケールの位置など表示内容が若干異なるかもしれませんが大丈夫です問題ありません）  
 
 ![project-Deploy1](./4-1-1-3-3n.jpg)
 
 クォータの効果を確認するため、「Overview」をクリックし、Podを5に増やしてみましょう。  
 ![project-Deploy1](./4-1-3n.jpg)
 
-上記でQutaをクリックし、リソースの超過を確認してみます。  
+上記でQutaをクリック（表示されるまで少し時間がかかります）し、リソースの超過を確認してみます。  
 ![project-Deploy1](./4-1-4n.jpg)
 
 終了したら、、ホームページに戻り、プロジェクトを削除します。  
