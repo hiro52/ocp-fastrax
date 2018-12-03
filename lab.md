@@ -649,7 +649,7 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**Add t
 
          openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-test', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false'
          sleep 30
-         sh 'curl http://cotd-pipeline-test.apps.${GUID}.example.opentlc.com/data/ | grep cats -q'
+         sh 'curl http://cotd-pipeline-test.apps.tokyo-${GUID}.openshiftworkshop.com/data/ | grep cats -q'
         }
 
         stage ('Promote and Verify in Production Env') {
@@ -660,7 +660,7 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**Add t
          openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-prod', verbose: 'false', waitTime: ''
          openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-prod', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false'
          sleep 60
-         sh 'curl http://cotd-pipeline-prod.apps.${GUID}.example.opentlc.com/data/ | grep cats -q'
+         sh 'curl http://cotd-pipeline-prod.apps.tokyo-${GUID}.openshiftworkshop.com/data/ | grep cats -q'
         }
       }
     }
