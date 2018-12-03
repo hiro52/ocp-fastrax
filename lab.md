@@ -303,7 +303,7 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 終了したら、、ホームページに戻り、プロジェクトを削除します。  
 
 
-## 5.環境変数の設定と確認 (03 04)
+## 5.環境変数の設定と確認
 アプリケーション作成の際に環境変数を設定し、コンテナに設定が反映されることを確認してみましょう。
 　新しくアプリケーションをデプロイし、そのアプリケーションが使用しているCPUやメモリリソースについて確認してみましょう。
 
@@ -327,7 +327,7 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 ### ***「Applications」→「Pods」をクリックします。***
 
 ![project-Deploy1](./6-1-7.jpg)
-### ***nodejs-mongodb-example-xxxをクリックします。***
+### ***nodejs-mongodb-example-xxxをクリックします。(少し時間がかかります。表示されない時は少し待ちましょう)***
 
 ![project-Deploy1](./6-1-8.jpg)
 ### ***Terminalタブを開き、echo $MONGODB_ADMIN_PASSWORDを入力し、デプロイ時に設定したパスワードが表示されることを確認します。***
@@ -360,9 +360,9 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 
 ![project-Deploy1](./7-1-3n.jpg)
 
-### ***Add to Projectで、作成したプロジェクト、Versionは7.0を選択します。 Name欄に、"cotd"、GitURLに、https://github.com/devops-with-openshift/cotd を入力。さらに、「advanced options」をクリックし、下の方へスクロールします。***
+### ***Add to Projectで、作成したプロジェクト、Versionは7.0を選択します。 Application Name欄に、"cotd"、Git Repositoryに、https://github.com/devops-with-openshift/cotd を入力。さらに、「advanced options」をクリックし、下の方へスクロールします。***
 
-![project-Deploy1](./7-1-4n.jpg)
+![project-Deploy1](./7-1-4nn.jpg)
 
 
 ### ***Deployment Configurationsセクションで、環境変数として、"SELECTOR cities" を入力します。さらに下にスクロールし、Labelsに "app cotd" が設定されていることを確認し（図なし）、「Create」をクリックします。***
