@@ -360,7 +360,7 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 
 ![project-Deploy1](./7-1-3n.jpg)
 
-### ***Add to Projectで、作成したプロジェクト、Versionは7.0を選択します。 Application Name欄に、"cotd"、Git Repositoryに、https://github.com/devops-with-openshift/cotd を入力。さらに、「advanced options」をクリックし、下の方へスクロールします。***
+### ***Add to Projectで、作成したプロジェクト、Versionは7.1を選択します。 Application Name欄に、"cotd"、Git Repositoryに、https://github.com/devops-with-openshift/cotd を入力。さらに、「advanced options」をクリックし、下の方へスクロールします。***
 
 ![project-Deploy1](./7-1-4nn.jpg)
 
@@ -422,6 +422,24 @@ Podのこの様なアップデート方法を、ローリングアップデー�
 ### ***StrategyがRecreateに変更されたことを確認します。***
 ![project-Deploy1](./7-2-7-2n.jpg)
 
+<変更前>  
+    strategy:  
+      activeDeadlineSeconds: 21600  
+      resources: {}  
+      rollingParams:  
+        intervalSeconds: 1  
+        maxSurge: 25%  
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    
+<変更後>  
+    strategy:  
+      activeDeadlineSeconds: 21600  
+      resources: {} 
+      type: Recreate
+      
 ### ***「Deploy」をクリックし、「Overview」を表示します。***
 ![project-Deploy1](./7-2-8.jpg)
 
