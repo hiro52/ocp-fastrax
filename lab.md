@@ -362,7 +362,7 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 
 ### ***Add to Projectで、作成したプロジェクト、Versionは7.0を選択します。 Application Name欄に、"cotd"、Git Repositoryに、https://github.com/devops-with-openshift/cotd を入力。さらに、「advanced options」をクリックし、下の方へスクロールします。***
 
-![project-Deploy1](./7-1-4n.jpg)
+![project-Deploy1](./7-1-4nn.jpg)
 
 
 ### ***Deployment Configurationsセクションで、環境変数として、"SELECTOR cities" を入力します。さらに下にスクロールし、Labelsに "app cotd" が設定されていることを確認し（図なし）、「Create」をクリックします。***
