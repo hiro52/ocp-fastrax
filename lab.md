@@ -1,194 +1,26 @@
 # 1.はじめに（本コンテンツの前提等）  
-　本コンテンツは、Red Hatがパートナー様向けに提供しているオンラインLAB環境（OPENTLC）を利用したF2Fでのハンズオントレーニングを想定しています。資料としては、一般的にも利用できる流れにはなっていますが、OPENTLCならではの表記もございますのでご了承ください。また、インプリメンテーションの無い、OpenShiftの使い方に関するLABコンテンツはこちらをご利用ください。
+　本コンテンツは、Red Hatがパートナー様向けに提供している製品デモ環境（RHPDS）を利用したF2Fでのハンズオントレーニングを想定しています。資料としては、一般的にも利用できる流れにはなっていますが、OPENTLCならではの表記もございますのでご了承ください。また、インプリメンテーションの無い、OpenShiftの使い方に関するLABコンテンツはこちらをご利用ください。
  
- https://github.com/hiro52/ocp-fastrax/blob/master/LAB.md
+ https://github.com/hiro52/ocp-fastrax/blob/OCP3.9-Shared/LAB.md
  
 # 1-1.環境の説明  
-　今回OpenShiftのインストールを行う環境は以下を想定しています。環境はOPENTLC前提です。
+　環境はRHPDS OpenShift 3.11 前提です。
  
- ・Workstation（SSH接続を行うための踏み台ホスト）  
+ ・OpenShift マスターサーバー x 1 台  
+ ・OpenShift インフラノード x 1 台  
+ ・OpenShift ワーカーノード x 1台～（ユーザー数の1/5）  
  ・NFS  
- ・Load Balancer  
-   　外部：loadbalancer.$GUID.example.opentlc.com  
-   　内部：loadbalancer1.$GUID.internal  
- ・OpenShift マスターサーバー x 3 台  
-   　外部：master{1,2,3}.$GUID.example.opentlc.com  
-   　内部：master{1,2,3}.$GUID.internal  
- ・OpenShift インフラノード x 2 台  
-   　外部：infranode{1,2}.$GUID.example.opentlc.com  
-   　内部：infranode{1,2}.$GUID.internal  
- ・OpenShift ワーカーノード x 2 台  
-  　 外部： node{1,2}.$GUID.example.opentlc.com  
-  　 内部：node{1,2}.$GUID.internal  
-
  
-# 1-2.前準備とOpenShift3.7のインストール  
- では、上記環境にOpenShift3.7をインストールしてみましょう♪  
- まずは、WorkstationにSSH接続し、以下進めます。  
-  ※接続先情報等は別途ご確認ください。  
-
-　rootユーザーになって、LAB環境で利用するGUIDを変数に入れておきましょう。  
-
-    # sudo -i
-    # echo ${GUID}
-    # export GUID=$(hostname | cut -d. -f2)
-    # echo ${GUID}; echo "export GUID=${GUID}" >> /root/.bashrc
-
-　OpenShift マスターノードにssh接続し、同じことを実施します。  
- 
-    # ssh master1.$GUID.internal
-    # sudo -i
-    # export GUID=$(hostname | cut -d. -f2)
-    # echo $GUID; echo "export GUID=${GUID}" >> /root/.bashrc
-
-  exit2回で、Workstation端末に戻りWorkstation上で以下継続します。  
-
-    # exit 
-    # exit 
-
-  今回のLAB環境には、Ansibleを使った環境チェックのためのHostsファイルが作成されています。中身を見てみましょう。  
-
-    # cat /etc/ansible/hosts 
-
-  （確認のみ）Ansibleのコマンドを叩いて、ホストの内容を確認し、Ansible ping で応答も見てみましょう♪
-
-    # ansible masters --list-hosts
-    # ansible nodes --list-hosts
-    # ansible all --list-hosts
-    # ansible all -m ping
-
-   Playbook 実行時のログを有効にします。
-
-    # sed -i 's/#log_/log_/' /etc/ansible/ansible.cfg
-
-   今回の環境には、マスターサーバー、インフラノード、ワーカーノードに既にDockerがインストールされ、デーモンが起動しています。以下のコマンドで確認してみましょう。  
-
-    # ansible -f 10 nodes -m shell -a "systemctl status docker | grep Active"
-  
-  ![project-Deploy1](./1-1n.jpg)
-
-   いよいよインストールです。OpenShiftのインストールにはAnsibleを利用します。  
-   インストールのためのインベントリファイルは、/var/preserve/hosts にありますので、リネームしコピーします。
-
-    # cp /var/preserve/hosts /root/my_ocp_inventory
-    
-  OpenShiftインストールにはこの構成ファイルを利用します。中身をご説明します。
-  
-    # vi /root/my_ocp_inventory
-
-  1. Ansibleがコマンド実行の際、root権限を利用することの許可と、接続時にはec2-userを利用することの指定です。  
-  2. インストールタイプとして、Red Hat のOpenShiftを選択しています。  
-  3. コンテナでのインストールも可能ですが、ここでは、Falseを選択し、RPMインストールを行います。  
-  4. デプロイメントの際、リソースが少ないとエラーとなります。今回の環境は潤沢なリソースがないので、チェックを回避するオプションを入れています。  
-  5. ポッドが、env=appラベルの付いたノードで実行される様指定しています。  
-
- 
-  ![project-Deploy1](./1-2n2.jpg)
-  
-    
-　さらに下の方を確認しましょう。
- 
-  1. cockpit のインストールを行う指定とそのパラメータの設定です。  
-  2. OpenShiftのインストールと共に追加されるプロジェクトの指定を行います。  
-
-  ![project-Deploy1](./1-3n2.jpg)
-
-  ### OpenShiftのマスターに対する設定を行います。  
-
-  1. OpenShift のAPIで利用するポート番号をしています。デフォルトは、8443です。  
-  2. OpenShiftクラスタで利用するHAに関する設定を行います。現状サポートされるのは"native"のみです。  
-  3. ロードバランサーのプライベート側のアドレスを指定します。  
-  4. ロードバランサーのパブリック側のアドレス、および、デフォルトのサブドメインを指定します。  
-  
-  ![project-Deploy1](./1-4n.jpg)
-  
-
-  ### OpenShiftのネットワークに対する設定を行います。  
-
-  1. ポッドが利用するIPアドレスレンジを指定します。デフォルトは10.1.0.0/16です。  
-  2. サービスが利用するIPアドレスレンジを指定します。デフォルトは、172.30.0.0/16です。  
-  3. SDNの指定です。ここでは標準のSDNを指定しています。マルチテナントプラグインを利用する場合は、redhat/openshift-ovs-multitenantを指定します。  
-  
-  ![project-Deploy1](./1-5n.jpg)
-
-
-  ### OpenShiftの認証に関する設定を行います。   
-
-  1. OpenShift マスターサーバでhtpasswdの仕組みを利用すること、及び構成ファイルの場所を指定しています。  
-  2. 3台のマスターサーバに対して配布するWorkstation 状の構成ファイルの場所を指定しています。  
-
-  ![project-Deploy1](./1-6n.jpg)
-
-  後ほど、ユーザー名：karla, andrewでOpenShift環境に接続します。既にこのユーザーが作成されていることを確認しておきます。
-  コンソール画面に戻って、以下のコマンドでユーザーを確認sてみましょう。
-  
-    # cat /root/htpasswd.openshift
-
-  ### OpenShiftのLogに関する設定を行います。   
-
-　クラスターのロギングはデフォルトでは設定されませんので、こちらで有効化します。  
- 
-  1. ログとメトリックスに関するインストールの可否を指定します。  
-  2. ストレージコンポーネントに関する設定を行います。  
-  3. cassndra/hawkular/heapster の稼働するホストをノードセレクターで指定しています。  
-
-  ![project-Deploy1](./1-7n.jpg)
-
-  ### Routerとレジストリに関する設定を行います。  
-  
-  1. Routerに対するノードセレクターはオプションです。指定を行うとマッチしたホストが存在する場合のみRouterが作成されます。  
-  2. Routerの数を指定します。指定されない場合は、セレクターで指定されたホストの数となります。  
-  3. Router同様、レジストリに対するノードセレクターはオプションです。指定を行うとマッチしたホストが存在する場合にのみ作成されます。  
-  4. Router同様、レジストリの数を指定します。指定されない場合は、セレクターで指定されたホストの数となります。  
-  5. レジストリをサポートするストレージ関連の設定です。  
-  
-  ![project-Deploy1](./1-8n.jpg)
-
-  ### サービスカタログに関する設定を行います。  
-
-  1. サービスカタログを有効化します。  
-  2. エラー回避のため指定しているオプションです。  
-  3. テンプレートサービスブローカーを有効化します。（1の有効化が必須）  
-  4. テンプレートサービスブローカーのホストの指定です。  
-  5. バグに関するワークアラウンドです。  
-  6. テンプレートサービスブローカーによってサービスされる1つ以上の名前空間です。  
-
-
-  ![project-Deploy1](./1-9n.jpg)
-  
-  
-  ### 以下は、Ansible Hosts ファイルで、OpenShiftを構成するホストに関する設定です。  
-  
-  ![project-Deploy1](./1-10n.jpg)
-  
- 
- ### OpenShiftインストーラーの起動  
- 
- 以下のコマンドで、OpenShiftインストーラーを起動します。
- 　※インストール完了までに20分ほどかかかります。適当に休憩を取りましょう♪
- 
-    # ansible-playbook -f 20 -i /root/my_ocp_inventory /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
- 
- ### OpenShiftアドミン権限の設定  
- 
- 既に設定されているユーザー、andrewとkarlaの内、andrewにクラスターアドミの権限を与えてみます。
-
-    # ssh master1.$GUID.internal
-    # oc login -u system:admin 
-    # oadm policy add-cluster-role-to-user cluster-admin andrew
-    
-    
 ## 2-1.プロジェクトの作成
  OpenShiftは、”プロジェクト”　単位でアプリケーションや権限などを管理しています。  
  アプリケーションを作成するにはまずプロジェクトを作成します。  
    
 ### ***2-1-1. OpenShift のWebコンソールにログインし、"New Project" をクリックします。***  
 
-アドレスは、ロードバランサーの外部IPアドレスです。  
-https://loadbalancer.$GUID.example.opentlc.com  
- user:karla  
- password:r3dh4t1!  
- 
+OpenShift Webコンソールのアドレス、ユーザーID、パスワードは講師よりご確認ください。
+なお、権限はOpenShift クラスターアドミン権限とユーザー権限があります。
+ここでは、各人に割り当てられたユーザー権限でログインしてください。
+
    <img src="2-1-1n.jpg" alt="attach:cat" title="attach:cat" width="700">  
 
 
@@ -204,7 +36,7 @@ https://loadbalancer.$GUID.example.opentlc.com
 ![project-Deploy1](./2-2-1-2n.jpg)
 ### ***Image Name 欄に、”sonatype/nexus3”を入力の上、右端の*** 🔍 ***アイコンをクリックし、次に、Deployをクリックします。***
 ![project-Deploy1](./2-2-1-2n2.jpg)
-※Sonatype が提供するDockerレポジトリからのコンテナ取得を行っています。また、詳細パラメータでは、コンテナに独自の構成情報を付加する「環境変数」と、リソースをグループ化し、アクセス制限など細かな制御を実現する「ラベル」の設定が可能であることを確認します（今回は設定しません）。
+※Sonatype が提供するDockerレポジトリからのコンテナ取得を行って起動しています。また、詳細パラメータでは、コンテナに独自の構成情報を付加する「環境変数」と、リソースをグループ化し、アクセス制限など細かな制御を実現する「ラベル」の設定が可能であることを確認します（今回はデフォルト値のままとします）。
   　
   　
   　
@@ -313,7 +145,7 @@ admin/admin123
 ![project-Deploy1](./3-3-5-1.jpg)
 ![project-Deploy1](./3-3-5-2.jpg)
 
-こちらは#1の表示例です。以下を確認します  
+以下は#1の表示例です。以下を確認します  
 ・「Rebuild」のクリックで再ビルド実行可能  
 ・ビルドのステータスとトリガー理由  
 ・ソース情報  
@@ -338,7 +170,7 @@ cakephp-mysql-exampleの方は、先ほどデプロイしましたので、LastV
   
 ![project-Deploy1](./3-3-9n.jpg)
 
-一通り確認ができたら、cakephp-mysql-example　行の「#2」をクリックします。テンプレートで設定された内容が確認できます。また、右上の「Actions」をクリックし、以下の確認・設定等が行えることを確認します。  
+一通り確認ができたら、cakephp-mysql-example　行の「#2」をクリックします。テンプレートで設定された内容が確認できます。また、右上の「Actions」をクリックし、デプロイメントに関する以下の設定が行えることを確認します。  
 
 ・オートスケール  
 ・リソースの制限  
@@ -365,7 +197,7 @@ cakephp-mysql-exampleの方は、先ほどデプロイしましたので、LastV
 ![project-Deploy1](./3-4-1.jpg)
 
 
-プロジェクト内で有効なPodが表示されることを確認します。「Completed」、「Running」などのステータスが確認できます。Podの一つをクリックします。
+プロジェクト内で有効なPodが表示されることを確認します。「Completed」、「Running」などのステータスが確認できます。ビルド自身もPodの中で実行されていることがわかります。Podの一つをクリックします。
 
 ![project-Deploy1](./3-4-2n.jpg)
 
