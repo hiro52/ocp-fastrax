@@ -264,6 +264,7 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 　※ID/パスワード等は別途講師にご確認ください。  
 
     $ sudo -i
+    $ oc login -u opentlc-mgr
     # cat << EOF > /root/compute-resources.yaml
     apiVersion: v1
     kind: ResourceQuota
