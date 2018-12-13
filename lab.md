@@ -492,7 +492,7 @@ OpenShift マスターサーバーにSSH接続します。
 ビルドやデプロイメント管理のため、**Jenkins** をデプロイします。
 デプロイが成功することを確認します。
 
-    $ oc new-app jenkins-persistent -p ENABLE_OAUTH=false -p MEMORY_LIMIT=1.5Gi -n pipeline-dev
+    $ oc new-app jenkins-persistent -p ENABLE_OAUTH=false -p MEMORY_LIMIT=1.5Gi -n pipeline-dev-${user}
     （コマンド実行後の表示内容は以下の通りです）
     --> Deploying template "openshift/jenkins-persistent" to project pipeline-dev
      Jenkins (Persistent)
@@ -507,31 +507,31 @@ GUI でプロジェクトpipeline-devに入り、Pod が立ち上がった（Pod
 
 Jenkins サービスアカウントに、test, prodプロジェクトに対するリソース管理権限を与えます。
 
-    $ oc policy add-role-to-user edit system:serviceaccount:pipeline-dev:jenkins -n pipeline-test
-    $ oc policy add-role-to-user edit system:serviceaccount:pipeline-dev:jenkins -n pipeline-prod
+    $ oc policy add-role-to-user edit system:serviceaccount:pipeline-dev:jenkins -n pipeline-test-${user}
+    $ oc policy add-role-to-user edit system:serviceaccount:pipeline-dev:jenkins -n pipeline-prod-${user}
 
 devから、test、prodへのイメージの引用を許可します。
 
-    $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-test -n pipeline-dev
-    $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-prod -n pipeline-dev
+    $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-test -n pipeline-dev-${user}
+    $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-prod -n pipeline-dev-${user}
 
 devプロジェクトにモックアプリケーションを作成します。  
 ※完了には5分くらいかかります。以下のコマンド、もしくはGUIで作成完了を確認してください。  
 
-    $ oc new-app https://github.com/devops-with-openshift/cotd -n pipeline-dev
+    $ oc new-app https://github.com/devops-with-openshift/cotd -n pipeline-dev-${user}
     （作成完了の確認は以下）
-    $ oc logs -f build/cotd-1 -n pipeline-dev 
+    $ oc logs -f build/cotd-1 -n pipeline-dev-${user} 
 
 イメージにtestready とprodreadyのTAGを付けます
 
-    $ oc tag cotd:latest cotd:testready -n pipeline-dev
-    $ oc tag cotd:testready cotd:prodready -n pipeline-dev
+    $ oc tag cotd:latest cotd:testready -n pipeline-dev-${user}
+    $ oc tag cotd:testready cotd:prodready -n pipeline-dev-${user}
 
 イメージストリームの内容及び、testreadyと、prodreadyのTAGが追加されていることを確認します。
 
-    $　oc describe is cotd -n pipeline-dev
+    $　oc describe is cotd -n pipeline-dev-${user}
     
-    oc describe is cotd -n pipeline-dev
+    oc describe is cotd -n pipeline-dev-userX
     
     Name:			cotd
     Created:		About an hour ago
@@ -546,20 +546,20 @@ devプロジェクトにモックアプリケーションを作成します。
 
 test, prodプロジェクトにそれぞれ、testreadyのTAG、ProdreadyのTAGがついたイメージからアプリケーションをデプロイします。
 
-    $ oc new-app pipeline-dev/cotd:testready --name=cotd -n pipeline-test
-    $ oc new-app pipeline-dev/cotd:prodready --name=cotd -n pipeline-prod
+    $ oc new-app pipeline-dev-${user}/cotd:testready --name=cotd -n pipeline-test-${user}
+    $ oc new-app pipeline-dev-${user}/cotd:prodready --name=cotd -n pipeline-prod-${user}
 
 3つ全てのアプリケーションのルートを作成します。
 
-    $ oc expose service cotd -n pipeline-dev
-    $ oc expose service cotd -n pipeline-test
-    $ oc expose service cotd -n pipeline-prod
+    $ oc expose service cotd -n pipeline-dev-${user}
+    $ oc expose service cotd -n pipeline-test-${user}
+    $ oc expose service cotd -n pipeline-prod-${user}
 
 自動デプロイメントを無効化します。
 
-    $ oc get dc cotd -o yaml -n pipeline-dev | sed 's/automatic: true/automatic: false/g' | oc replace -f -
-    $ oc get dc cotd -o yaml -n pipeline-test| sed 's/automatic: true/automatic: false/g' | oc replace -f -
-    $ oc get dc cotd -o yaml -n pipeline-prod | sed 's/automatic: true/automatic: false/g' | oc replace -f -
+    $ oc get dc cotd -o yaml -n pipeline-dev-${user} | sed 's/automatic: true/automatic: false/g' | oc replace -f -
+    $ oc get dc cotd -o yaml -n pipeline-test-${user} | sed 's/automatic: true/automatic: false/g' | oc replace -f -
+    $ oc get dc cotd -o yaml -n pipeline-prod-${user} | sed 's/automatic: true/automatic: false/g' | oc replace -f -
 
 OpenShift WebUIにログインし、**devプロジェクト**を表示、**Add to Project**で、**import YAML / JSON**を表示します。
 ![project-Deploy1](./8-1-15.jpg)
@@ -651,18 +651,18 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**Add t
          echo '*** Deployment Complete ***'
 
          echo '*** Service Verification Starting ***'
-         openshiftVerifyService apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', namespace: 'pipeline-dev', svcName: 'cotd', verbose: 'false'
+         openshiftVerifyService apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', namespace: 'pipeline-dev-${user}', svcName: 'cotd', verbose: 'false'
          echo '*** Service Verification Complete ***'
          openshiftTag(srcStream: 'cotd', srcTag: 'latest', destStream: 'cotd', destTag: 'testready')
         }
 
         stage ('Deploy and Test in Testing Env') {
-         echo "*** Deploy testready build in pipeline-test project  ***"
+         echo "*** Deploy testready build in pipeline-test-${user} project  ***"
          openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-test', verbose: 'false', waitTime: ''
 
-         openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-test', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false'
+         openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-test-${user}', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false'
          sleep 30
-         sh 'curl http://cotd-pipeline-test.apps.tokyo-${GUID}.openshiftworkshop.com/data/ | grep cats -q'
+         sh 'curl http://cotd-pipeline-test-${user}.apps.tokyo-${GUID}.openshiftworkshop.com/data/ | grep cats -q'
         }
 
         stage ('Promote and Verify in Production Env') {
@@ -670,10 +670,10 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**Add t
          input 'Should we deploy to Production?'
          openshiftTag(srcStream: 'cotd', srcTag: 'testready', destStream: 'cotd', destTag: 'prodready')
          echo '*** Deploying to Production ***'
-         openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-prod', verbose: 'false', waitTime: ''
-         openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-prod', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false'
+         openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-prod-${user}', verbose: 'false', waitTime: ''
+         openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-prod-${user}', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false'
          sleep 60
-         sh 'curl http://cotd-pipeline-prod.apps.tokyo-${GUID}.openshiftworkshop.com/data/ | grep cats -q'
+         sh 'curl http://cotd-pipeline-prod-${user}.apps.tokyo-${GUID}.openshiftworkshop.com/data/ | grep cats -q'
         }
       }
     }
