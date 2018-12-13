@@ -268,7 +268,7 @@ cli ツールが準備できましたら、以下を実施します。
     $ sudo -i
     # export user=userX   # Xには各自のuser 番号を入れてください！ 
     # echo ${user}        # user番号が出力されることを確認します
-    # oc login -u userX <Openshift Master Address>
+    # oc login -u <admin User> <Openshift Master Address>   # admin / password は共有ホルダのテキストファイルをご確認ください。
     # cat << EOF > /root/compute-resources-${user}.yaml
     apiVersion: v1
     kind: ResourceQuota
@@ -282,7 +282,7 @@ cli ツールが準備できましたら、以下を実施します。
         services: 5
     EOF
     
-    # oc create -f compute-resources.yaml -n <Project Name>
+    # oc create -f compute-resources-${user}.yaml -n <Project Name>
       ※最後のパラメータは自身のプロジェクト名に変更ください。
     # oc project <Project Name>
     # oc describe quota
@@ -305,8 +305,12 @@ cli ツールが準備できましたら、以下を実施します。
 上記でQutaをクリック（表示されるまで少し時間がかかります）し、リソースの超過を確認してみます。  
 ![project-Deploy1](./4-1-4n.jpg)
 
-終了したら、、ホームページに戻り、プロジェクトを削除します。  
+ホームページに戻り、プロジェクトを削除します。  
 
+oc コマンドでOpenShiftからlogoutし、rootから抜けます。
+
+    # oc logout
+    # exit
 
 ## 5.環境変数の設定と確認
 アプリケーション作成の際に環境変数を設定し、コンテナに設定が反映されることを確認してみましょう。
@@ -463,24 +467,28 @@ OpenShift マスターサーバーにSSH接続します。
 ##### ***```$ oc login -u userXX https://<OpenShift Master IP>/```***
 
 ### 7-1.プロジェクトの作成とJenkinsのデプロイ
+    $ export user=userX   # Xには各自のuser 番号を入れてください！ 
+    $ export GUID=YYYY    # YYYYの値は共有フォルダーのテキストファイルに記載れています！
+   　ご自身のuser 番号が表示されればOKです。表示されない場合は、以下を実行します。
+
 ３つの新しいプロジェクト(dev/test/ prod)を作成します。コマンドを3個実行します。 随時、OpenShiftのGUIでも作成の様子を確認してみましょう。
 
-    $ oc new-project pipeline-dev --description="Cat of the Day Development Environment" --display-name="Cat Of The Day - Dev"
-    $ oc new-project pipeline-test --description="Cat of the Day Testing Environment" --display-name="Cat Of The Day - Test"
-    $ oc new-project pipeline-prod --description="Cat of the Day Production Environment" --display-name="Cat Of The Day - Prod"
+    $ oc new-project pipeline-dev-${user} --description="Cat of the Day Development Environment" --display-name="Cat Of The Day - Dev"
+    $ oc new-project pipeline-test-${user} --description="Cat of the Day Testing Environment" --display-name="Cat Of The Day - Test"
+    $ oc new-project pipeline-prod-${user} --description="Cat of the Day Production Environment" --display-name="Cat Of The Day - Prod"
     
     
 作成したprojectを確認します。
 
     $ oc get projects
-    NAME                   　　DISPLAY NAME         STATUS
-    pipeline-mydemo-dev　　　Cat Of The Day - Dev　　　　Active
-    pipeline-mydemo-prod　　Cat Of The Day - Prod　　　　Active
-    pipeline-mydemo-test　　　Cat Of The Day - Test　　　　Active
+    NAME                   　      　DISPLAY NAME         STATUS
+    pipeline-mydemo-dev-userXX　　　Cat Of The Day - Dev　　　　Active
+    pipeline-mydemo-prod-userXX　　Cat Of The Day - Prod　　　　Active
+    pipeline-mydemo-test-userXX　　　Cat Of The Day - Test　　　　Active
 
 作成した3つのうち、pipline-devに入ります。
 
-    $ oc project pipeline-dev
+    $ oc project pipeline-dev-${user}
 ビルドやデプロイメント管理のため、**Jenkins** をデプロイします。
 デプロイが成功することを確認します。
 
