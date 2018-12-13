@@ -637,7 +637,7 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**Add t
 
 
     node {
-       withEnv(['GUID=af1d','user=user19']) {
+       withEnv(['GUID=XXXX','user=userYY']) {
         stage ("Build") {
          echo '*** Build Starting ***'
          openshiftBuild bldCfg: 'cotd', buildName: '', checkForTriggeredDeployments: 'false', commitID: '', namespace: '', showBuildLogs: 'false', verbose: 'false', waitTime: ''
