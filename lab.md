@@ -259,13 +259,17 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 
 ![project-Deploy1](./4-1-1-2n.jpg)
 
-クォータの設定はコマンドラインから行います。sshクライアントで、OpenShift 環境に接続します。  
-接続先は、OpenShift Web コンソールと同じFQDN名です。
-　※ID/パスワード等は別途講師にご確認ください。  
+クォータの設定はコマンドラインから行います。  
+OpenShift のコマンドラインの利用には専用の OpenShift cli が必要となります。  
+cli ツールの入手方法および設定方法については共有フォルダーのテキストファイル内に記載がありますのでそちらをご確認ください。  
+
+cli ツールが準備できましたら、以下を実施します。  
 
     $ sudo -i
-    $ oc login -u opentlc-mgr
-    # cat << EOF > /root/compute-resources.yaml
+    # export user=userX   # Xには各自のuser 番号を入れてください！ 
+    # echo ${user}        # user番号が出力されることを確認します
+    # oc login -u userX <Openshift Master Address>
+    # cat << EOF > /root/compute-resources-${user}.yaml
     apiVersion: v1
     kind: ResourceQuota
     metadata:
