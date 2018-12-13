@@ -635,8 +635,8 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**Add t
 パイプラインを編集します。2行目のGUIDの XXXX とuserのYY をそれぞれ適切な値に変更した上で、下記テキストをコピーペーストします。  
 　※GUIDは共有フォルダーのテキストファイルに記載があります！userYY は皆様の user番号です
  
-    node {
-     withEnv(['GUID=XXXX','user=userYY']) {
+node {
+   withEnv(['GUID=af1d','user=user19']) {
 
     stage ("Build") {
      echo '*** Build Starting ***'
