@@ -638,6 +638,50 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**Add t
 
     node {
        withEnv(['GUID=af1d','user=user19']) {
+        stage ("Build") {
+         echo '*** Build Starting ***'
+         openshiftBuild bldCfg: 'cotd', buildName: '', checkForTriggeredDeployments: 'false', commitID: '', namespace: '', showBuildLogs: 'false', verbose: 'false', waitTime: ''
+         openshiftVerifyBuild apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', bldCfg: 'cotd', checkForTriggeredDeployments: 'false', namespace: '', verbose: 'false'
+         echo '*** Build Complete ***'
+        }
+
+        stage ("Deploy and Verify in Development Env") {
+         echo '*** Deployment Starting ***'
+         openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: '', verbose: 'false', waitTime: ''
+         openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: '', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
+         echo '*** Deployment Complete ***'
+
+         echo '*** Service Verification Starting ***'
+         openshiftVerifyService apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', namespace: 'pipeline-dev-${user}', svcName: 'cotd', verbose: 'false'
+         echo '*** Service Verification Complete ***'
+         openshiftTag(srcStream: 'cotd', srcTag: 'latest', destStream: 'cotd', destTag: 'testready')
+        }
+
+         stage ('Deploy and Test in Testing Env') {
+          echo "*** Deploy testready build in pipeline-test-${user} project  ***"
+          openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-test-${user}', verbose: 'false', waitTime: ''
+
+          openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-test-${user}', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false'
+          sleep 30
+          sh 'curl http://cotd-pipeline-test-${user}.apps.tokyo-${GUID}.openshiftworkshop.com/data/ | grep cats -q'
+         }
+
+         stage ('Promote and Verify in Production Env') {
+          echo '*** Waiting for Input ***'
+          input 'Should we deploy to Production?'
+          openshiftTag(srcStream: 'cotd', srcTag: 'testready', destStream: 'cotd', destTag: 'prodready')
+          echo '*** Deploying to Production ***'
+          openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-prod-${user}', verbose: 'false', waitTime: ''
+          openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'cotd', namespace: 'pipeline-prod-${user}', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false'
+          sleep 60
+          sh 'curl http://cotd-pipeline-prod-${user}.apps.tokyo-${GUID}.openshiftworkshop.com/data/ | grep cats -q'
+         }
+       }
+     }
+ 
+ 
+    node {
+       withEnv(['GUID=af1d','user=user19']) {
 
     stage ("Build") {
      echo '*** Build Starting ***'
@@ -678,8 +722,8 @@ OpenShift WebUIにログインし、**devプロジェクト**を表示、**Add t
      sh 'curl http://cotd-pipeline-prod-${user}.apps.tokyo-${GUID}.openshiftworkshop.com/data/ | grep cats -q'
     }
   }
-}
-     
+} 
+ 
  この内容は以下の通りです。  
 - 4つのステージを含む  
 - 定義可能な複数の動作を有する  
