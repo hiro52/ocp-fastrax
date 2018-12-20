@@ -518,9 +518,7 @@ devから、test、prodへのイメージの引用を許可します。
 devプロジェクトにモックアプリケーションを作成します。  
 ※完了には5分くらいかかります。以下のコマンド、もしくはGUIで作成完了を確認してください。  
 
-    $ oc new-app https://github.com/devops-with-openshift/cotd -n pipeline-dev-${user}
-    （作成完了の確認は以下）
-    $ oc logs -f build/cotd-1 -n pipeline-dev-${user} 
+    $ oc new-app /sonatype/nexus3 -n pipeline-dev-${user}
 
 イメージにtestready とprodreadyのTAGを付けます
 
@@ -529,9 +527,9 @@ devプロジェクトにモックアプリケーションを作成します。
 
 イメージストリームの内容及び、testreadyと、prodreadyのTAGが追加されていることを確認します。
 
-    $　oc describe is cotd -n pipeline-dev-${user}
+    $　oc describe is nexus3 -n pipeline-dev-${user}
     
-    oc describe is cotd -n pipeline-dev-userX
+    oc describe is nexus3 -n pipeline-dev-userX
     
     Name:			cotd
     Created:		About an hour ago
