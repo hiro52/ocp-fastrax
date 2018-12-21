@@ -466,7 +466,7 @@ OpenShift マスターサーバーにSSH接続します。
 さらに以下を実行します。  
 
     $ su - userX   # 各User ID で端末にログインしてください。Xには各自のuser 番号を入力します！ 
-    $ oc login -u user=userX https://<OpenShift Master IP>   # Xには各自のuser 番号を入れてください！ 
+    $ oc login -u userX https://<OpenShift Master IP>   # Xには各自のuser 番号を入れてください！ 
     $ export user=userX   # Xには各自のuser 番号を入れてください！ 
     $ export GUID=YYYY    # YYYYの値は共有フォルダーのテキストファイルに記載れています！
    　ご自身のuser 番号が表示されればOKです。表示されない場合は、以下を実行します。
