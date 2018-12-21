@@ -519,6 +519,8 @@ devプロジェクトにモックアプリケーションを作成します。
 ※完了には5分くらいかかります。以下のコマンド、もしくはGUIで作成完了を確認してください。  
 
     $ oc new-app https://github.com/devops-with-openshift/cotd -n pipeline-dev-${user}
+    （作成完了の確認は以下）
+    $ oc logs -f build/cotd-1 -n pipeline-dev 
 
 イメージにtestready とprodreadyのTAGを付けます
 
