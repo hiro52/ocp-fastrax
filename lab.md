@@ -507,13 +507,13 @@ GUI でプロジェクトpipeline-devに入り、Pod が立ち上がった（Pod
 
 Jenkins サービスアカウントに、test, prodプロジェクトに対するリソース管理権限を与えます。
 
-    $ oc policy add-role-to-user edit system:serviceaccount:pipeline-dev:jenkins -n pipeline-test-${user}
-    $ oc policy add-role-to-user edit system:serviceaccount:pipeline-dev:jenkins -n pipeline-prod-${user}
+    $ oc policy add-role-to-user edit system:serviceaccount:pipeline-dev-${user}:jenkins -n pipeline-test-${user}
+    $ oc policy add-role-to-user edit system:serviceaccount:pipeline-dev-${user}:jenkins -n pipeline-prod-${user}
 
 devから、test、prodへのイメージの引用を許可します。
 
-    $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-test -n pipeline-dev-${user}
-    $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-prod -n pipeline-dev-${user}
+    $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-test-${user} -n pipeline-dev-${user}
+    $ oc policy add-role-to-group system:image-puller system:serviceaccounts:pipeline-prod-${user} -n pipeline-dev-${user}
 
 devプロジェクトにモックアプリケーションを作成します。  
 ※完了には5分くらいかかります。以下のコマンド、もしくはGUIで作成完了を確認してください。  
