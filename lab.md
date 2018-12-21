@@ -269,7 +269,7 @@ OpenShift マスターノードに対してまずはsshでログインします�
     # export user=userX   # Xには各自のuser 番号を入れてください！ 
     # echo ${user}        # user番号が出力されることを確認します
     # oc login -u <admin User> <Openshift Master Address>   # admin / password は共有ホルダのテキストファイルをご確認ください。
-    # cat << EOF > /root/compute-resources-${user}.yaml
+    # cat << EOF > compute-resources-${user}.yaml
     apiVersion: v1
     kind: ResourceQuota
     metadata:
