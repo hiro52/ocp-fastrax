@@ -307,7 +307,7 @@ OpenShift マスターノードに対してまずはsshでログインします�
 
 ホームページに戻り、プロジェクトを削除します。  
 
-oc コマンドでOpenShiftからlogoutし、rootから抜けます。
+oc コマンドでOpenShiftからlogoutし、userXから抜けます。
 
     # oc logout
     # exit
