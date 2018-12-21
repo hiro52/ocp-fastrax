@@ -260,12 +260,12 @@ View Archive をクリックすると、Kibanaログシステムに接続でき�
 ![project-Deploy1](./4-1-1-2n.jpg)
 
 クォータの設定はコマンドラインから行います。  
-OpenShift のコマンドラインの利用には専用の OpenShift cli が必要となります。  
-cli ツールの入手方法および設定方法については共有フォルダーのテキストファイル内に記載がありますのでそちらをご確認ください。  
+OpenShift マスターノードに対してまずはsshでログインします。
 
-cli ツールが準備できましたら、以下を実施します。  
-
-    $ sudo -i
+    $ ssh -i ssh-private.pem ec2-user@master.tokyo-<GUID>.openshiftworkshop.com
+     上記はLinux、MACの場合です。Windowsの場合はPuTTYやTeraTermなどを使ってsshキー認証にて接続してください。
+     
+    $ su - userX  # X には各自のuser番号を入れてください！ 
     # export user=userX   # Xには各自のuser 番号を入れてください！ 
     # echo ${user}        # user番号が出力されることを確認します
     # oc login -u <admin User> <Openshift Master Address>   # admin / password は共有ホルダのテキストファイルをご確認ください。
